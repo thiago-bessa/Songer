@@ -1,0 +1,270 @@
+﻿A               0 0 2 2 2 0
+A               5 7 7 6 5 5
+A               x x 0 9 109
+A#7 (Bb7)       x x 3 3 3 4
+A(add B)        0 0 2 4 2 0
+A(add B)        x 0 7 6 0 0
+A(no 3rd)       x 0 2 2 x 0
+A/C#            0 4 x 2 5 0
+A/C#            x 4 2 2 2 x
+A/C#            x 4 7 x x x
+A/D             x x 0 6 5 5
+A/E             0 0 2 2 2 0
+A/G             3 x 2 2 2 0
+A13             0 0 2 0 2 2
+A5              5 7 7 x x x
+A5              x 0 2 2 x x
+A6              0 0 2 2 2 2
+A6              x x 0 141414
+A6sus4          x 0 2 2 3 2
+A7              x 0 2 2 2 3
+A7sus4          x 0 2 2 3 3
+A9              x x 0 121212
+Ab              4 6 6 5 4 4
+Ab              x x 6 5 4 4
+Abmaj           4 6 6 5 4 4
+Ab/A            x 0 1 1 1 0
+Ab5             4 6 6 x x x
+Ab7             x x 1 1 1 2
+Ab9             x x 6 5 7 6
+Am              x 0 2 2 1 0
+Am              x 0 7 5 5 5
+Amaj            x 0 2 2 2 0
+Am(add B)       0 0 7 5 0 0
+Am7             x 0 2 0 1 0
+Am7             x 0 2 2 1 3
+Am7/G           1 0 3 0 2 1
+Am7sus4         x 0 2 0 3 0
+Amsus2          x 0 2 2 0 0
+Ao/C            0 3 x 2 4 0
+Asus11          0 0 0 0 0 0
+Asus4           0 0 2 2 3 0
+B               x 2 4 4 4 2
+B(add E)        x 2 2 4 4 2
+B/A             0 0 4 4 4 0
+B5              7 9 9 x x x
+B5              x 2 4 4 x x
+B5/C#           x 4 4 4 x x
+B7              x 2 1 2 0 2
+B7              x 2 4 2 4 2
+B7#9            x 2 1 2 3 x
+B7/A            x 0 1 2 0 2
+B7/F#           2 x 1 2 0 2
+Bb              x 1 3 3 3 1
+Bbmaj           x 1 3 3 3 1
+Bb/D            x x 0 3 x x
+Bb/F            1 1 3 3 3 1
+Bb5             6 8 8 x x x
+Bb5             x 1 3 3 x x
+Bb7             0 1 3 1 3 1
+Bb7             x 1 3 1 3 1
+Bb7             x x 3 3 3 4
+Bb7sus4         x 1 3 1 4 1
+Bbm             1 1 3 3 2 1
+Bbm6            x x 3 0 2 1
+Bbmaj7          0 1 x 2 3 0
+Bbmaj7          1 2 3 2 3 1
+Bdim            x x 0 1 0 1
+Bm              2 2 4 4 3 2
+Bm              x 2 4 4 3 x
+Bmaj            x 2 4 4 4 2
+Bm/E            0 0 2 4 3 2
+Bm7             x 2 4 2 3 2
+Bm7(-9/-5)      0 2 3 2 1 0
+Bm7sus4         x 2 4 2 5 2
+Bo7             0 0 3 4 3 4
+Bsus            x 2 3 3 4 2
+C               0 3 5 5 5 3
+C               x 3 2 0 1 0
+C#5             x 4 6 6 x x
+C#7             x 4 3 4 2 x
+C#9             x x 0 4 4 4
+C#m             x 4 6 6 5 4
+C#m             x x 2 1 2 0
+C#m7            0 4 2 4 0 0
+C#m7            x 4 6 4 5 4
+C#o             x 4 x 0 2 0
+C(add 9)        x 3 2 0 3 0
+C+/G#(add B)    x 0 6 5 5 7
+C/D             x x 0 0 1 0
+C/D             x x 0 5 5 3
+C/E             0 0 2 0 1 3
+C/E             0 3 2 0 1 0
+C/G             3 3 2 0 1 0
+C/G             3 x 2 0 1 0
+C/G             x 0 5 5 5 8
+C11             x 3 3 3 3 3
+C5              x 3 5 5 x x
+C5/D            x 5 5 5 x x
+C6              8 12x x x x
+C6              x 3 2 2 1 0
+C7              x 3 2 3 1 0
+C7              x 3 5 3 5 3
+C7sus           x 3 3 3 3 3
+C7sus4          x 3 5 3 6 3
+C9              x x 0 3 3 3
+Cm              x 3 5 5 4 3
+Cm              x x 5 5 4 3
+Cmaj            x 3 2 0 1 0
+Cmaj7           0 3 2 0 0 0
+Cmaj7           x 3 5 4 5 3
+Csus2           0 3 x 0 2 2
+Csus4/F         0 0 3 0 1 3
+D               x 5 4 2 3 x
+D               x x 0 2 3 2
+D               x x 0 7 7 5
+D#5             x 6 8 8 x x
+D#7 (Eb7)       x x 1 3 2 3
+D#m (Ebm)       x x 4 3 4 2
+D+/C            0 3 x 3 3 2
+D/A             0 0 4 2 3 0
+D/F#            2 x 0 2 3 0
+D/F#            x 0 4 2 3 2
+D/F#            x 9 7 7 x x
+D/G             3 x 0 2 3 2
+D11             x x 0 0 1 0
+D5              x 5 7 7 x x
+D5              x x 0 2 3 x
+D5/A            5 5 7 7 x x
+D5/F#           2 x 0 2 3 x
+D7              x 0 0 2 1 2
+D7              x 0 0 2 1 2
+D7              x 3 x 2 3 2
+D7              x 5 7 5 7 5
+D7#9            x 5 4 5 6 x
+D7/F#           2 x 0 2 1 0
+D7b9            x 5 4 5 4 x
+D9              x x 0 2 1 0
+D9              x x 0 5 5 5
+Db              x 4 3 1 2 1
+Db              x 4 6 6 6 4
+Db              x x 3 1 2 1
+Dbmaj (C#maj)   x x 3 1 2 1
+Db/Ab           4 4 6 6 6 4
+Db5             x 4 6 6 x x
+Dbmaj7          x 3 3 1 2 1
+Dbmaj7          x 4 6 5 6 4
+Dm              x 0 0 2 3 1
+Dm(add E)       x x 7 7 6 0
+Dm(no 3rd)      x x 0 2 3 0
+Dmaj            x 0 0 2 3 2
+Dm7             x 5 7 5 6 5
+Dm7             x x 0 2 1 1
+Dm7             x x 0 5 6 5
+Dm7-5           x x 0 1 1 1
+Dsus+4          x x 0 2 3 4
+Dsus2           x x 0 0 3 2
+Dsus4           x x 0 2 3 3
+E               0 3 3 2 0 0
+E               x 7 6 4 5 x
+E(add F#)       0 x 4 1 0 0
+E5              0 2 x x x x
+E5              x 7 9 9 x x
+E7              0 2 0 1 0 0
+E7              0 2 2 1 3 0
+E9              0 0 2 1 3 2
+Eb              x x 1 3 4 3
+Eb              x x 5 3 4 3
+Ebmaj           x x 5 3 4 3
+Eb+             0 0 1 0 0 0
+Eb/Ab           4 x 5 3 4 0
+Eb/Bb           x 1 1 3 4 3
+Eb5             x 6 8 8 x x
+Eb7             x 1 1 3 2 3
+Eb7             x 6 8 6 8 6
+Eb7             x x 1 3 2 3
+Eb9             x x 0 6 6 6
+Ebmaj7          0 0 1 3 3 3
+Ebmaj7          x 6 8 7 8 6
+Em              0 2 2 0 0 0
+Em              x 0 5 4 5 0
+Emaj            0 2 2 1 0 0
+Em(add 9)       0 2 4 0 0 0
+Em(add F#)      0 x 4 0 0 0
+Em/D            x x 0 9 8 7
+Em7             0 x 0 0 0 x
+Em7/A           0 0 0 0 0 0
+Emaj7           0 x 6 4 4 0
+Emsus4          0 2 2 2 0 0
+Esus3           x x 2 2 0 0
+F               1 3 3 2 1 1
+F#              x x 4 3 2 2
+F#maj (Gbmaj)   2 4 4 3 2 2
+F#+             2 x 4 3 3 0
+F#7             2 4 2 3 2 2
+F#7             x 0 4 3 2 0
+F#7             x x 4 3 2 0
+F#m             2 4 4 2 2 2
+F#m             x x 4 2 2 2
+F#m/E           0 x 4 2 2 0
+F#m7            2 x 2 2 2 0
+F#o             x x 4 5 x x
+F/A             x 0 3 2 1 1
+F/C             x 3 3 2 1 1
+F/G             3 x 3 2 1 1
+F5              1 3 3 x x x
+F5              x 8 1010x x
+F5              x 8 10x x x
+F5i             1 3 3 x x x
+F6              1 1 3 2 3 1
+F7              x x 3 5 4 5
+F7+9            x x 1 2 1 4
+Fm              x x 3 1 1 1
+Fm              x x 4 2 2 2
+Fmaj            1 3 3 2 1 1
+Fm6             x x 3 1 3 1
+Fm6/Ab          x x 0 1 1 1
+Fm7             x 8 108 9 8
+Fm7             x x 3 1 4 1
+Fm9             x x 3 1 4 3
+Fmaj7           0 0 3 2 1 0
+Fmaj7           1 3 3 2 1 0
+Fmaj7           1 x 2 2 1 0
+G               3 2 0 0 0 3
+G               3 2 0 0 3 3
+G               3 5 5 4 3 3
+G               3 x 0 0 0 3
+G               x 10121212x
+G               x x 0 7 8 7
+G#7 (Ab7)       x x 1 1 1 2
+G#m (Abm)       x x 0 4 4 4
+G#m7            4 x 4 4 4 0
+G(no 3rd)       3 x 0 0 3 3
+G+              3 x 1 0 0 0
+G+              3 x 1 0 0 3
+G+sus2          3 x 1 2 0 0
+G/A             0 0 0 0 0 3
+G/A             x 0 0 0 x x
+G/B             0 2 0 0 3 0
+G/B             0 2 x 0 2 2
+G/B             x 2 5 x x x
+G/B             x x 5 3 4 x
+G/D             x x 0 4 3 3
+G/E             x x 2 4 3 3
+G/F             1 x 0 0 0 3
+G/F#            x x 4 4 3 3
+G5              3 5 5 x x x
+G5              3 x 0 0 3 3
+G5              3 x 0 0 x x
+G6              3 x 1 0 0 3
+G6              3 x 2 0 0 0
+G6sus2          3 x 2 2 0 0
+G7              3 2 0 0 0 1
+G7/B            x x 0 0 0 1
+G7sus2          3 x 3 2 0 0
+G9              x 2 3 2 3 3
+G9              x x 5 4 6 5
+Gm              3 5 5 3 3 3
+Gm              x x 0 3 3 3
+Gmaj            3 2 0 0 0 3
+Gm6             3 x 0 3 3 0
+Gm7             0 0 3 3 3 3
+Gm7             3 5 3 3 3 3
+Gm9             3 5 3 3 3 5
+Gmaj7           3 x 0 0 3 2
+Gmaj7           3 x 4 0 0 3
+Gsus+4          3 x 0 0 2 0
+Gsus2           3 x 0 2 0 0
+Gsus2(add Eb)   3 x 1 2 3 0
+Gsus4           3 x 0 0 1 0
+Gsus4           x 10121213x
