@@ -75,7 +75,7 @@ namespace Songer
                     double freq = (double)frequencyInfoSource.SampleRate * i / e.Spectrogram.Length;
                     double amplitude = e.Spectrogram[i] / 1000000000000;
 
-                    if (freq < 70 || amplitude < 40)
+                    if (freq < 70 || amplitude < 100)
                         continue;
 
                     MusicalNote musicalNote = notes.FindClosestNote(freq);
@@ -95,7 +95,7 @@ namespace Songer
             this.SuspendLayout();
             amplitudeView.Items.Clear();
 
-            foreach (KeyValuePair<MusicalNote, double> musicalNote in notesToShow)
+            foreach (KeyValuePair<MusicalNote, double> musicalNote in notesToShow.OrderByDescending(n => n.Value))
             {
                 ListViewItem item = amplitudeView.Items.Add(musicalNote.Key.Name);
                 item.SubItems.Add(musicalNote.Key.Frequency.ToString("f3"));

@@ -3,6 +3,28 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Songer", "Songer\Songer.csproj", "{890520DE-FEED-44D7-A673-5320DDB8B0B2}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sounds", "Sounds", "{F9284B67-2C0F-438C-924F-1BE9740F0325}"
+	ProjectSection(SolutionItems) = preProject
+		Sounds\A.wav = Sounds\A.wav
+		Sounds\Bm.wav = Sounds\Bm.wav
+		Sounds\C.wav = Sounds\C.wav
+		Sounds\Cm.wav = Sounds\Cm.wav
+		Sounds\D.wav = Sounds\D.wav
+		Sounds\D[]F#.wav = Sounds\D[]F#.wav
+		Sounds\E.wav = Sounds\E.wav
+		Sounds\F.wav = Sounds\F.wav
+		Sounds\G.wav = Sounds\G.wav
+		Sounds\MUS_EuNaoVouMePerdoar.wav = Sounds\MUS_EuNaoVouMePerdoar.wav
+		Sounds\MUS_EuNaoVouMudar.wav = Sounds\MUS_EuNaoVouMudar.wav
+		Sounds\MUS_IncapazDePerdoar.wav = Sounds\MUS_IncapazDePerdoar.wav
+		Sounds\MUS_Please.wav = Sounds\MUS_Please.wav
+		Sounds\MUS_VoceSempreSeArrepende.wav = Sounds\MUS_VoceSempreSeArrepende.wav
+		Sounds\Seq1.wav = Sounds\Seq1.wav
+		Sounds\Seq1Var.wav = Sounds\Seq1Var.wav
+		Sounds\Seq2.wav = Sounds\Seq2.wav
+		Sounds\Seq2Var.wav = Sounds\Seq2Var.wav
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
