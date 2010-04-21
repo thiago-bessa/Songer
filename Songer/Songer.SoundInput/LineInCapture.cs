@@ -1,90 +1,59 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
-//using Microsoft.DirectX.DirectSound;
 using SlimDX.DirectSound;
 using SlimDX.Multimedia;
 using Microsoft.Win32.SafeHandles;
+using Songer.SoundAnalysis;
 
-namespace SoundCapture
+namespace Songer.SoundInput
 {
-    /// <summary>
-    /// Base class to capture audio samples.
-    /// </summary>
-    public abstract class SoundCaptureBase : IDisposable
+    public class LineInCapture : SoundSource, IDisposable
     {
         const int BufferSeconds = 3;
         const int NotifyPointsInSecond = 2;
-
-        // change in next two will require also code change
-        const int BitsPerSample = 16; 
-        const int ChannelCount = 1; 
-
-        int sampleRate = 44100;
         bool isCapturing = false;
         bool disposed = false;
 
-        public bool IsCapturing
-        {
-            get { return isCapturing; }
-        }
-
-        public int SampleRate
-        {
-            get { return sampleRate; }
-            set 
-            {
-                if (sampleRate <= 0) throw new ArgumentOutOfRangeException();
-
-                EnsureIdle();
-
-                sampleRate = value; 
-            }
-        }
+        //Values based on possible guitar notes
+        const double MinFreq = 60;
+        const double MaxFreq = 1300;
         
         DirectSoundCapture capture;
         CaptureBuffer buffer;
-        //Notify notify;
         int bufferLength;
         AutoResetEvent positionEvent;
-        //SafeWaitHandle positionEventHandle;
         ManualResetEvent terminated;
         Thread thread;
-        SoundCaptureDevice device;
 
-        public SoundCaptureBase()
-            : this(SoundCaptureDevice.GetDefaultDevice())
+        public LineInCapture()
         {
-
-        }
-
-        public SoundCaptureBase(SoundCaptureDevice device)
-        {
-            this.device = device;
-
             positionEvent = new AutoResetEvent(false);
-            //positionEventHandle = positionEvent.SafeWaitHandle;
             terminated = new ManualResetEvent(true);
         }
 
         private void EnsureIdle()
         {
-            if (IsCapturing)
-                throw new SoundCaptureException("Capture is in process");
+            if (this.isCapturing)
+            {
+                throw new LineCaptureException("Capture is in process");
+            }
         }
 
         /// <summary>
         /// Starts capture process.
         /// </summary>
-        public void Start()
+        public override void Listen()
         {
             EnsureIdle();
 
             isCapturing = true;
 
             WaveFormat format = new WaveFormat();
-            format.Channels = ChannelCount;
-            format.BitsPerSample = BitsPerSample;
-            format.SamplesPerSecond = SampleRate;
+            format.Channels = 1;
+            format.BitsPerSample = 16;
+            format.SamplesPerSecond = 44100;
             format.FormatTag = WaveFormatTag.Pcm;
             format.BlockAlignment = (short)((format.Channels * format.BitsPerSample + 7) / 8);
             format.AverageBytesPerSecond = format.BlockAlignment * format.SamplesPerSecond;
@@ -94,7 +63,7 @@ namespace SoundCapture
             desciption.Format = format;
             desciption.BufferBytes = bufferLength;
 
-            capture = new DirectSoundCapture(device.Id);
+            capture = new DirectSoundCapture();
             buffer = new CaptureBuffer(capture, desciption);
 
             int waitHandleCount = BufferSeconds * NotifyPointsInSecond;
@@ -135,7 +104,7 @@ namespace SoundCapture
 
                     short[] data = new short[itemsCount];
                     buffer.Read<short>(data, nextCapturePosition, false);//, itemsCount, 0);
-                    ProcessData(data);
+                    this.ProcessData(data);
                     nextCapturePosition = (nextCapturePosition + lockSize) % bufferLength;
                 }
             }
@@ -149,12 +118,32 @@ namespace SoundCapture
         /// Processes the captured data.
         /// </summary>
         /// <param name="data">Captured data</param>
-        protected abstract void ProcessData(short[] data);
+        protected void ProcessData(short[] data)
+        {
+            double[] spectrogram = CooleyTukeyFFT.CalculateSpectrogram(data);
+            int index = 0;
+            double max = spectrogram[0];
+            int usefullMaxSpectr = Math.Min(spectrogram.Length, (int)(MaxFreq * spectrogram.Length / 44100) + 1);
+
+            for (int i = 1; i < usefullMaxSpectr; i++)
+            {
+                if (max < spectrogram[i])
+                {
+                    max = spectrogram[i];
+                    index = i;
+                }
+            }
+            //index = 46;
+            double freq = (double)44100 * index / spectrogram.Length;
+            if (freq < MinFreq) freq = 0;
+
+            this.OnSoundDetected(new SoundDetectedEventArgs(freq, spectrogram, usefullMaxSpectr));
+        }
 
         /// <summary>
         /// Stops capture process.
         /// </summary>
-        public void Stop()
+        public override void Stop()
         {
             if (isCapturing)
             {
@@ -169,26 +158,29 @@ namespace SoundCapture
             }
         }
 
-        void IDisposable.Dispose()
+        public void Dispose()
         {
-            Dispose(true);
+            if (!this.disposed)
+            {
+                this.disposed = true;
+                GC.SuppressFinalize(this);
+
+                if (this.isCapturing)
+                {
+                    this.Stop();
+                }
+
+                this.positionEvent.Close();
+                this.terminated.Close();
+            }
         }
 
-        ~SoundCaptureBase()
+        public class LineCaptureException : Exception
         {
-            Dispose(false);
-        }
-
-        private void Dispose(bool disposing)
-        {
-            if (disposed) return;
-
-            disposed = true;
-            GC.SuppressFinalize(this);
-            if (IsCapturing) Stop();
-            //positionEventHandle.Dispose();
-            positionEvent.Close();
-            terminated.Close();            
+            public LineCaptureException(string message)
+                : base(message)
+            {
+            }
         }
     }
 }

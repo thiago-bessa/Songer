@@ -25,6 +25,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sounds", "Sounds", "{F9284B
 		Sounds\Seq2Var.wav = Sounds\Seq2Var.wav
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Songer.SoundAnalysis", "Songer.SoundAnalysis\Songer.SoundAnalysis.csproj", "{60E8F932-BD9C-44BE-B76B-D8AD7560721A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Songer.SoundInput", "Songer.SoundInput\Songer.SoundInput.csproj", "{4A4CB233-46D6-454E-B7B4-91FE30139D79}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -39,6 +43,14 @@ Global
 		{890520DE-FEED-44D7-A673-5320DDB8B0B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{890520DE-FEED-44D7-A673-5320DDB8B0B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{890520DE-FEED-44D7-A673-5320DDB8B0B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60E8F932-BD9C-44BE-B76B-D8AD7560721A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60E8F932-BD9C-44BE-B76B-D8AD7560721A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60E8F932-BD9C-44BE-B76B-D8AD7560721A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60E8F932-BD9C-44BE-B76B-D8AD7560721A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A4CB233-46D6-454E-B7B4-91FE30139D79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A4CB233-46D6-454E-B7B4-91FE30139D79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A4CB233-46D6-454E-B7B4-91FE30139D79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A4CB233-46D6-454E-B7B4-91FE30139D79}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
