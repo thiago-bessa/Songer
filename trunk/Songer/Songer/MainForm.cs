@@ -6,24 +6,23 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using SoundCapture;
+using Songer.SoundInput;
 
 namespace Songer
 {
     public partial class MainForm : Form
     {
-        private bool isListenning = false;
+        private SoundSource soundSource;
         private MusicalNoteDictionary notes;
         private ChordDictionary chords;
-
-        public bool IsListenning
-        {
-            get { return isListenning; }
-        }
 
         public MainForm()
         {
             InitializeComponent();
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
             this.notes = new MusicalNoteDictionary(@"Docs\Notes.txt");
             this.chords = new ChordDictionary(@"Docs\Chords.txt", this.notes);
 
@@ -32,39 +31,29 @@ namespace Songer
                 ListViewItem item = chordsView.Items.Add(chord.Name);
                 item.SubItems.Add(chord.ToString());
             }
-        }
 
-        FrequencyInfoSource frequencyInfoSource;
-
-        private void StopListenning()
-        {
-            isListenning = false;
-            frequencyInfoSource.Stop();
-            frequencyInfoSource.FrequencyDetected -= new EventHandler<FrequencyDetectedEventArgs>(frequencyInfoSource_FrequencyDetected);
-            frequencyInfoSource = null;
-        }
-
-        private void StartListenning(SoundCaptureDevice device)
-        {
-            isListenning = true;
-            frequencyInfoSource = new SoundFrequencyInfoSource(device);
-            frequencyInfoSource.FrequencyDetected += new EventHandler<FrequencyDetectedEventArgs>(frequencyInfoSource_FrequencyDetected);
-            frequencyInfoSource.Listen();
-        }
-
-        void frequencyInfoSource_FrequencyDetected(object sender, FrequencyDetectedEventArgs e)
-        {
-            if (InvokeRequired)
+            soundSource = new LineInCapture();
+            soundSource.SoundDetected += (o, args) =>
             {
-                BeginInvoke(new EventHandler<FrequencyDetectedEventArgs>(frequencyInfoSource_FrequencyDetected), sender, e);
-            }
-            else
-            {
-                UpdateFrequecyDisplays(e);
-            }
+                this.BeginInvoke(new EventHandler<SoundDetectedEventArgs>(UpdateFrequecyDisplays), o, args);
+            };
+
+            soundSource.Listen();
+
+            this.chordsView.Focus();
         }
 
-        private void UpdateFrequecyDisplays(FrequencyDetectedEventArgs e)
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            soundSource.Stop();
+        }
+
+        private void chordsView_Leave(object sender, EventArgs e)
+        {
+            this.chordsView.Focus();
+        }
+
+        private void UpdateFrequecyDisplays(object sender, SoundDetectedEventArgs e)
         {
             Dictionary<MusicalNote, double> notesToShow = new Dictionary<MusicalNote, double>();
 
@@ -72,7 +61,7 @@ namespace Songer
             {
                 for (int i = 1; i < e.MaxSpectrogram; i++)
                 {
-                    double freq = (double)frequencyInfoSource.SampleRate * i / e.Spectrogram.Length;
+                    double freq = (double)44100 * i / e.Spectrogram.Length;
                     double amplitude = e.Spectrogram[i] / 1000000000000;
 
                     if (freq < 70 || amplitude < 100)
@@ -103,37 +92,6 @@ namespace Songer
             }
 
             this.ResumeLayout();
-        }
-
-        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (IsListenning)
-            {
-                StopListenning();
-            }
-        }
-
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-            SoundCaptureDevice device = null;
-            using (SelectDeviceForm form = new SelectDeviceForm())
-            {
-                if (form.ShowDialog() == DialogResult.OK)
-                {
-                    device = form.SelectedDevice;
-                }
-            }
-
-            if (device != null)
-            {
-                StartListenning(device);
-                this.chordsView.Focus();
-            }
-        }
-
-        private void chordsView_Leave(object sender, EventArgs e)
-        {
-            this.chordsView.Focus();
         }
     }
 }

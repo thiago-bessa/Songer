@@ -1,23 +1,33 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
-namespace Songer.Analysis
+namespace Songer.SoundAnalysis
 {
     /// <summary>
     /// Cooley-Tukey FFT algorithm.
     /// </summary>
-    public static class FftAlgorithm
+    public static class CooleyTukeyFFT
     {
         /// <summary>
         /// Calculates FFT using Cooley-Tukey FFT algorithm.
         /// </summary>
-        /// <param name="x">input data</param>
+        /// <param name="inputData">input data</param>
         /// <returns>spectrogram of the data</returns>
         /// <remarks>
         /// If amount of data items not equal a power of 2, then algorithm
         /// automatically pad with 0s to the lowest amount of power of 2.
         /// </remarks>
-        public static double[] Calculate(double[] x)
+        public static double[] CalculateSpectrogram(short[] inputData)
         {
+            //Convert short[] data to double[]
+            double[] x = new double[inputData.Length];
+            for (int i = 0; i < x.Length; i++)
+            {
+                x[i] = inputData[i];
+            }
+
             int length;
             int bitsInLength;
             if (IsPowerOfTwo(x.Length))
@@ -81,7 +91,8 @@ namespace Songer.Analysis
             int i = 0;
             while (n > 0)
             {
-                ++i; n >>= 1;
+                ++i; 
+                n >>= 1;
             }
             return i;
         }
@@ -118,4 +129,3 @@ namespace Songer.Analysis
     }
 
 }
-

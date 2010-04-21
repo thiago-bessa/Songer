@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
-namespace Songer.Analysis
+namespace Songer.SoundAnalysis
 {
-    /// <summary>
-    /// Complex number.
-    /// </summary>
-    struct ComplexNumber
+    public struct ComplexNumber
     {
         public double Re;
         public double Im;

@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{890520DE-FEED-44D7-A673-5320DDB8B0B2}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <ProjectGuid>{4A4CB233-46D6-454E-B7B4-91FE30139D79}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Songer</RootNamespace>
-    <AssemblyName>Songer</AssemblyName>
+    <RootNamespace>Songer.SoundInput</RootNamespace>
+    <AssemblyName>Songer.SoundInput</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,10 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SlimDX, Version=2.0.8.42, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\SlimDX\SlimDX SDK (August 2009)\Bin\x86\SlimDX.dll</HintPath>
-    </Reference>
+    <Reference Include="SlimDX, Version=2.0.9.42, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=x86" />
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -46,62 +43,19 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Notes\ChordDictionary.cs" />
-    <Compile Include="Notes\Chord.cs" />
-    <Compile Include="MainForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MainForm.designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Notes\MusicalNote.cs" />
-    <Compile Include="Notes\MusicalNoteDictionary.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="LineInCapture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Docs\Chords.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Docs\Notes.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Compile Include="SoundDetectedEventArgs.cs" />
+    <Compile Include="SoundSource.cs" />
+    <Compile Include="WaveFileCapture.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Songer.SoundAnalysis\Songer.SoundAnalysis.csproj">
       <Project>{60E8F932-BD9C-44BE-B76B-D8AD7560721A}</Project>
       <Name>Songer.SoundAnalysis</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Songer.SoundInput\Songer.SoundInput.csproj">
-      <Project>{4A4CB233-46D6-454E-B7B4-91FE30139D79}</Project>
-      <Name>Songer.SoundInput</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
