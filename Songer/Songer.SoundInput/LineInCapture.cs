@@ -11,150 +11,111 @@ namespace Songer.SoundInput
 {
     public class LineInCapture : SoundSource, IDisposable
     {
-        const int BufferSeconds = 3;
-        const int NotifyPointsInSecond = 2;
-        bool isCapturing = false;
-        bool disposed = false;
+        private const int bufferSeconds = 1;
+        private const int notifyPointsInSecond = 2;
+        private bool isCapturing = false;
+        private bool disposed = false;
+        private int bufferLength;
 
-        //Values based on possible guitar notes
-        const double MinFreq = 60;
-        const double MaxFreq = 1300;
-        
-        DirectSoundCapture capture;
-        CaptureBuffer buffer;
-        int bufferLength;
-        AutoResetEvent positionEvent;
-        ManualResetEvent terminated;
-        Thread thread;
+        private DirectSoundCapture captureDevice;
+        private CaptureBuffer captureBuffer;
+        private AutoResetEvent positionEvent;
+        private ManualResetEvent terminatedEvent;
+        private Thread captureThread;
 
         public LineInCapture()
         {
-            positionEvent = new AutoResetEvent(false);
-            terminated = new ManualResetEvent(true);
+            this.positionEvent = new AutoResetEvent(false);
+            this.terminatedEvent = new ManualResetEvent(true);
         }
-
-        private void EnsureIdle()
+        
+        public override void Listen()
         {
             if (this.isCapturing)
             {
-                throw new LineCaptureException("Capture is in process");
+                throw new InvalidOperationException("Capture is in process");
             }
-        }
 
-        /// <summary>
-        /// Starts capture process.
-        /// </summary>
-        public override void Listen()
-        {
-            EnsureIdle();
+            this.isCapturing = true;
+            this.bufferLength = this.Format.AverageBytesPerSecond * bufferSeconds;
 
-            isCapturing = true;
-
-            WaveFormat format = new WaveFormat();
-            format.Channels = 1;
-            format.BitsPerSample = 16;
-            format.SamplesPerSecond = 44100;
-            format.FormatTag = WaveFormatTag.Pcm;
-            format.BlockAlignment = (short)((format.Channels * format.BitsPerSample + 7) / 8);
-            format.AverageBytesPerSecond = format.BlockAlignment * format.SamplesPerSecond;
-
-            bufferLength = format.AverageBytesPerSecond * BufferSeconds;
             CaptureBufferDescription desciption = new CaptureBufferDescription();
-            desciption.Format = format;
+            desciption.Format = this.Format;
             desciption.BufferBytes = bufferLength;
 
-            capture = new DirectSoundCapture();
-            buffer = new CaptureBuffer(capture, desciption);
+            this.captureDevice = new DirectSoundCapture();
+            this.captureBuffer = new CaptureBuffer(captureDevice, desciption);
 
-            int waitHandleCount = BufferSeconds * NotifyPointsInSecond;
-            NotificationPosition[] positions = new NotificationPosition[waitHandleCount];
+            int waitHandleCount = bufferSeconds * notifyPointsInSecond;
+            NotificationPosition[] notificationPositions = new NotificationPosition[waitHandleCount];
+
             for (int i = 0; i < waitHandleCount; i++)
             {
                 NotificationPosition position = new NotificationPosition();
-                position.Offset = (i + 1) * bufferLength / positions.Length - 1;
+                position.Offset = (i + 1) * bufferLength / notificationPositions.Length - 1;
                 position.Event = positionEvent;
-                positions[i] = position;
+
+                notificationPositions[i] = position;
             }
 
-            buffer.SetNotificationPositions(positions);
+            this.captureBuffer.SetNotificationPositions(notificationPositions);
 
-            terminated.Reset();
-            thread = new Thread(new ThreadStart(ThreadLoop));
-            thread.Name = "Sound capture";
-            thread.Start();
+            this.terminatedEvent.Reset();
+            this.captureThread = new Thread(new ThreadStart(this.CaptureLoop));
+            this.captureThread.Name = "Sound capture";
+            this.captureThread.Start();
         }
 
-        private void ThreadLoop()
+        private void CaptureLoop()
         {
-            buffer.Start(true);
+            this.captureBuffer.Start(true);
+
             try
             {
                 int nextCapturePosition = 0;
-                WaitHandle[] handles = new WaitHandle[] { terminated, positionEvent };
+                WaitHandle[] handles = new WaitHandle[] { this.terminatedEvent, this.positionEvent };
+
                 while (WaitHandle.WaitAny(handles) > 0)
                 {
-                    int capturePosition = buffer.CurrentCapturePosition;
-                    int readPosition = buffer.CurrentReadPosition;
-
+                    int readPosition = this.captureBuffer.CurrentReadPosition;
                     int lockSize = readPosition - nextCapturePosition;
-                    if (lockSize < 0) lockSize += bufferLength;
-                    if((lockSize & 1) != 0) lockSize--;
+
+                    if (lockSize < 0)
+                    {
+                        lockSize += this.bufferLength;
+                    }
+
+                    if ((lockSize & 1) != 0)
+                    {
+                        lockSize--;
+                    }
 
                     int itemsCount = lockSize >> 1;
 
                     short[] data = new short[itemsCount];
-                    buffer.Read<short>(data, nextCapturePosition, false);//, itemsCount, 0);
+                    this.captureBuffer.Read<short>(data, nextCapturePosition, false);
                     this.ProcessData(data);
                     nextCapturePosition = (nextCapturePosition + lockSize) % bufferLength;
                 }
             }
             finally
             {
-                buffer.Stop();
+                this.captureBuffer.Stop();
             }
         }
 
-        /// <summary>
-        /// Processes the captured data.
-        /// </summary>
-        /// <param name="data">Captured data</param>
-        protected void ProcessData(short[] data)
-        {
-            double[] spectrogram = CooleyTukeyFFT.CalculateSpectrogram(data);
-            int index = 0;
-            double max = spectrogram[0];
-            int usefullMaxSpectr = Math.Min(spectrogram.Length, (int)(MaxFreq * spectrogram.Length / 44100) + 1);
 
-            for (int i = 1; i < usefullMaxSpectr; i++)
-            {
-                if (max < spectrogram[i])
-                {
-                    max = spectrogram[i];
-                    index = i;
-                }
-            }
-            //index = 46;
-            double freq = (double)44100 * index / spectrogram.Length;
-            if (freq < MinFreq) freq = 0;
-
-            this.OnSoundDetected(new SoundDetectedEventArgs(freq, spectrogram, usefullMaxSpectr));
-        }
-
-        /// <summary>
-        /// Stops capture process.
-        /// </summary>
         public override void Stop()
         {
-            if (isCapturing)
+            if (this.isCapturing)
             {
-                isCapturing = false;
+                this.isCapturing = false;
 
-                terminated.Set();
-                thread.Join();
+                this.terminatedEvent.Set();
+                this.captureThread.Join();
 
-                //notify.Dispose();
-                buffer.Dispose();
-                capture.Dispose();
+                this.captureBuffer.Dispose();
+                this.captureDevice.Dispose();
             }
         }
 
@@ -171,15 +132,7 @@ namespace Songer.SoundInput
                 }
 
                 this.positionEvent.Close();
-                this.terminated.Close();
-            }
-        }
-
-        public class LineCaptureException : Exception
-        {
-            public LineCaptureException(string message)
-                : base(message)
-            {
+                this.terminatedEvent.Close();
             }
         }
     }

@@ -32,20 +32,23 @@ namespace Songer
                 item.SubItems.Add(chord.ToString());
             }
 
-            soundSource = new LineInCapture();
-            soundSource.SoundDetected += (o, args) =>
+            this.soundSource = new LineInCapture();
+            //this.soundSource = new WaveFileCapture(@"..\..\..\Sounds\G.wav");
+            
+            this.soundSource.SoundDetected += (o, args) =>
             {
                 this.BeginInvoke(new EventHandler<SoundDetectedEventArgs>(UpdateFrequecyDisplays), o, args);
             };
 
-            soundSource.Listen();
+            this.soundSource.Listen();
 
             this.chordsView.Focus();
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            soundSource.Stop();
+            this.soundSource.Stop();
+            Application.Exit();
         }
 
         private void chordsView_Leave(object sender, EventArgs e)
@@ -84,7 +87,7 @@ namespace Songer
             this.SuspendLayout();
             amplitudeView.Items.Clear();
 
-            foreach (KeyValuePair<MusicalNote, double> musicalNote in notesToShow.OrderByDescending(n => n.Value))
+            foreach (KeyValuePair<MusicalNote, double> musicalNote in notesToShow)
             {
                 ListViewItem item = amplitudeView.Items.Add(musicalNote.Key.Name);
                 item.SubItems.Add(musicalNote.Key.Frequency.ToString("f3"));
