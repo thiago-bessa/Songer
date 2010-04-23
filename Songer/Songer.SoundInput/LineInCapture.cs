@@ -29,7 +29,7 @@ namespace Songer.SoundInput
             this.terminatedEvent = new ManualResetEvent(true);
         }
         
-        public override void Listen()
+        public override void Start()
         {
             if (this.isCapturing)
             {
@@ -66,10 +66,10 @@ namespace Songer.SoundInput
             this.captureThread.Start();
         }
 
-        private void CaptureLoop()
+        protected override void CaptureLoop()
         {
             this.captureBuffer.Start(true);
-
+                
             try
             {
                 int nextCapturePosition = 0;
@@ -94,7 +94,7 @@ namespace Songer.SoundInput
 
                     short[] data = new short[itemsCount];
                     this.captureBuffer.Read<short>(data, nextCapturePosition, false);
-                    this.ProcessData(data);
+                    this.OnSoundDetected(data);
                     nextCapturePosition = (nextCapturePosition + lockSize) % bufferLength;
                 }
             }

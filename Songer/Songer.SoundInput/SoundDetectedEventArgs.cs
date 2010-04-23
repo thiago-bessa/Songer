@@ -7,15 +7,11 @@ namespace Songer.SoundInput
 {
     public class SoundDetectedEventArgs : EventArgs
     {
-        public double Frequency { get; private set; }
-        public double[] Spectrogram { get; private set; }
-        public int MaxSpectrogram { get; private set; }
+        public short[] SoundData { get; private set; }
 
-        public SoundDetectedEventArgs(double frequency, double[] spectrogram, int indexMaxSpectrogram)
+        public SoundDetectedEventArgs(short[] soundData)
         {
-            this.Frequency = frequency;
-            this.Spectrogram = spectrogram;
-            this.MaxSpectrogram = indexMaxSpectrogram;
+            this.SoundData = soundData;
         }
     }
 }
