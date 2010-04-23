@@ -10,44 +10,28 @@ namespace Songer.SoundAnalysis
     /// </summary>
     public static class CooleyTukeyFFT
     {
-        /// <summary>
-        /// Calculates FFT using Cooley-Tukey FFT algorithm.
-        /// </summary>
-        /// <param name="inputData">input data</param>
-        /// <returns>spectrogram of the data</returns>
-        /// <remarks>
-        /// If amount of data items not equal a power of 2, then algorithm
-        /// automatically pad with 0s to the lowest amount of power of 2.
-        /// </remarks>
-        public static double[] CalculateSpectrogram(short[] inputData)
+        public static double[] CalculateSpectrogram(short[] soundData)
         {
-            //Convert short[] data to double[]
-            double[] x = new double[inputData.Length];
-            for (int i = 0; i < x.Length; i++)
-            {
-                x[i] = inputData[i];
-            }
-
             int length;
             int bitsInLength;
-            if (IsPowerOfTwo(x.Length))
+            if (IsPowerOfTwo(soundData.Length))
             {
-                length = x.Length;
+                length = soundData.Length;
                 bitsInLength = Log2(length) - 1;
             }
             else
             {
-                bitsInLength = Log2(x.Length);
+                bitsInLength = Log2(soundData.Length);
                 length = 1 << bitsInLength;
                 // the items will be pad with zeros
             }
 
             // bit reversal
             ComplexNumber[] data = new ComplexNumber[length];
-            for (int i = 0; i < x.Length; i++)
+            for (int i = 0; i < soundData.Length; i++)
             {
                 int j = ReverseBits(i, bitsInLength);
-                data[j] = new ComplexNumber(x[i]);
+                data[j] = new ComplexNumber(soundData[i]);
             }
 
             // Cooley-Turkey 
