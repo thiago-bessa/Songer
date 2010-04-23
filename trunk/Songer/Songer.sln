@@ -29,6 +29,19 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Songer.SoundAnalysis", "Son
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Songer.SoundInput", "Songer.SoundInput\Songer.SoundInput.csproj", "{4A4CB233-46D6-454E-B7B4-91FE30139D79}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentos", "Documentos", "{FDA642E8-5C37-4C74-8D9A-BFE26DE1B172}"
+	ProjectSection(SolutionItems) = preProject
+		Documentos\Acompanhamento Mensal - Março.doc = Documentos\Acompanhamento Mensal - Março.doc
+		Documentos\Cadastro.doc = Documentos\Cadastro.doc
+		Documentos\DiagramasUML.vsd = Documentos\DiagramasUML.vsd
+		Documentos\Manual_Proj_Final_anexos.doc = Documentos\Manual_Proj_Final_anexos.doc
+		Documentos\Proposta.doc = Documentos\Proposta.doc
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Songer.MusicalInterpreter", "Songer.MusicalInterpreter\Songer.MusicalInterpreter.csproj", "{42E2AB1C-6C71-4AED-8298-F657CD58A5AC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Songer.Database", "Songer.Database\Songer.Database.csproj", "{40185A99-F854-4AA0-BFB8-CC87D245C88E}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -51,6 +64,14 @@ Global
 		{4A4CB233-46D6-454E-B7B4-91FE30139D79}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A4CB233-46D6-454E-B7B4-91FE30139D79}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A4CB233-46D6-454E-B7B4-91FE30139D79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42E2AB1C-6C71-4AED-8298-F657CD58A5AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42E2AB1C-6C71-4AED-8298-F657CD58A5AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42E2AB1C-6C71-4AED-8298-F657CD58A5AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42E2AB1C-6C71-4AED-8298-F657CD58A5AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40185A99-F854-4AA0-BFB8-CC87D245C88E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40185A99-F854-4AA0-BFB8-CC87D245C88E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40185A99-F854-4AA0-BFB8-CC87D245C88E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40185A99-F854-4AA0-BFB8-CC87D245C88E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
