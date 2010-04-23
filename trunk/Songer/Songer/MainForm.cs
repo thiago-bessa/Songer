@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Songer.SoundInput;
+using Songer.MusicalInterpreter;
+using Songer.SoundAnalysis;
 
 namespace Songer
 {
@@ -15,6 +17,9 @@ namespace Songer
         private SoundSource soundSource;
         private MusicalNoteDictionary notes;
         private ChordDictionary chords;
+
+        private delegate void UpdateDisplayDelegate(Dictionary<MusicalNote, double> notesBeingPlayed);
+        
 
         public MainForm()
         {
@@ -37,10 +42,10 @@ namespace Songer
             
             this.soundSource.SoundDetected += (o, args) =>
             {
-                this.BeginInvoke(new EventHandler<SoundDetectedEventArgs>(UpdateFrequecyDisplays), o, args);
+                this.ProcessSoundData(o, args);                
             };
 
-            this.soundSource.Listen();
+            this.soundSource.Start();
 
             this.chordsView.Focus();
         }
@@ -56,38 +61,60 @@ namespace Songer
             this.chordsView.Focus();
         }
 
-        private void UpdateFrequecyDisplays(object sender, SoundDetectedEventArgs e)
+        private void ProcessSoundData(object sender, SoundDetectedEventArgs e)
         {
-            Dictionary<MusicalNote, double> notesToShow = new Dictionary<MusicalNote, double>();
+            Dictionary<MusicalNote, double> notesBeingPlayed = new Dictionary<MusicalNote, double>();
 
-            if (e.Frequency > 0)
+            double minFreq = 70; //Value based on possible guitar notes
+            double maxFreq = 1300; //Value based on possible guitar notes
+            double[] spectrogram = CooleyTukeyFFT.CalculateSpectrogram(e.SoundData);
+
+            int index = 0;
+            double max = spectrogram[0];
+            int usefullMaxSpectr = Math.Min(spectrogram.Length, (int)(maxFreq * spectrogram.Length / 44100) + 1);
+
+            for (int i = 1; i < usefullMaxSpectr; i++)
             {
-                for (int i = 1; i < e.MaxSpectrogram; i++)
+                if (max < spectrogram[i])
                 {
-                    double freq = (double)44100 * i / e.Spectrogram.Length;
-                    double amplitude = e.Spectrogram[i] / 1000000000000;
+                    max = spectrogram[i];
+                    index = i;
+                }
+            }
 
-                    if (freq < 70 || amplitude < 100)
+            if (((double)44100 * index / spectrogram.Length) > minFreq)
+            {
+                for (int i = 1; i < usefullMaxSpectr; i++)
+                {
+                    double freq = (double)44100 * i / spectrogram.Length;
+                    double amplitude = spectrogram[i];
+
+                    if (freq < minFreq || amplitude < 100000000000000)
                         continue;
 
                     MusicalNote musicalNote = notes.FindClosestNote(freq);
 
-                    if (notesToShow.ContainsKey(musicalNote))
+                    if (notesBeingPlayed.ContainsKey(musicalNote))
                     {
-                        if (notesToShow[musicalNote] < amplitude)
-                            notesToShow[musicalNote] = amplitude;
+                        if (notesBeingPlayed[musicalNote] < amplitude)
+                            notesBeingPlayed[musicalNote] = amplitude;
                     }
                     else
                     {
-                        notesToShow.Add(musicalNote, amplitude);
+                        notesBeingPlayed.Add(musicalNote, amplitude);
                     }
                 }
             }
 
+            this.Invoke(new UpdateDisplayDelegate(this.UpdateFrequecyDisplays), notesBeingPlayed);
+        }
+
+        private void UpdateFrequecyDisplays(Dictionary<MusicalNote, double> notesBeingPlayed)
+        {
             this.SuspendLayout();
             amplitudeView.Items.Clear();
 
-            foreach (KeyValuePair<MusicalNote, double> musicalNote in notesToShow)
+            foreach (KeyValuePair<MusicalNote, double> musicalNote in notesBeingPlayed)
             {
                 ListViewItem item = amplitudeView.Items.Add(musicalNote.Key.Name);
                 item.SubItems.Add(musicalNote.Key.Frequency.ToString("f3"));
