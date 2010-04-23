@@ -29,13 +29,13 @@
         private void InitializeComponent()
         {
             this.mainSplitContainer = new System.Windows.Forms.SplitContainer();
+            this.chordsView = new System.Windows.Forms.ListView();
+            this.chordHeader = new System.Windows.Forms.ColumnHeader();
+            this.notesHeader = new System.Windows.Forms.ColumnHeader();
             this.amplitudeView = new System.Windows.Forms.ListView();
             this.noteHeader = new System.Windows.Forms.ColumnHeader();
             this.frequencyHeader = new System.Windows.Forms.ColumnHeader();
             this.amplitudeHeader = new System.Windows.Forms.ColumnHeader();
-            this.chordsView = new System.Windows.Forms.ListView();
-            this.chordHeader = new System.Windows.Forms.ColumnHeader();
-            this.notesHeader = new System.Windows.Forms.ColumnHeader();
             this.mainSplitContainer.Panel1.SuspendLayout();
             this.mainSplitContainer.Panel2.SuspendLayout();
             this.mainSplitContainer.SuspendLayout();
@@ -59,6 +59,30 @@
             this.mainSplitContainer.Size = new System.Drawing.Size(760, 368);
             this.mainSplitContainer.SplitterDistance = 364;
             this.mainSplitContainer.TabIndex = 0;
+            // 
+            // chordsView
+            // 
+            this.chordsView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.chordHeader,
+            this.notesHeader});
+            this.chordsView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chordsView.FullRowSelect = true;
+            this.chordsView.HideSelection = false;
+            this.chordsView.Location = new System.Drawing.Point(0, 0);
+            this.chordsView.Name = "chordsView";
+            this.chordsView.Size = new System.Drawing.Size(364, 368);
+            this.chordsView.TabIndex = 12;
+            this.chordsView.UseCompatibleStateImageBehavior = false;
+            this.chordsView.View = System.Windows.Forms.View.Details;
+            // 
+            // chordHeader
+            // 
+            this.chordHeader.Text = "Chord";
+            // 
+            // notesHeader
+            // 
+            this.notesHeader.Text = "Composed of";
+            this.notesHeader.Width = 300;
             // 
             // amplitudeView
             // 
@@ -87,31 +111,8 @@
             // amplitudeHeader
             // 
             this.amplitudeHeader.Text = "Amplitude";
+            this.amplitudeHeader.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.amplitudeHeader.Width = 160;
-            // 
-            // chordsView
-            // 
-            this.chordsView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.chordHeader,
-            this.notesHeader});
-            this.chordsView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chordsView.FullRowSelect = true;
-            this.chordsView.HideSelection = false;
-            this.chordsView.Location = new System.Drawing.Point(0, 0);
-            this.chordsView.Name = "chordsView";
-            this.chordsView.Size = new System.Drawing.Size(364, 368);
-            this.chordsView.TabIndex = 12;
-            this.chordsView.UseCompatibleStateImageBehavior = false;
-            this.chordsView.View = System.Windows.Forms.View.Details;
-            // 
-            // chordHeader
-            // 
-            this.chordHeader.Text = "Chord";
-            // 
-            // notesHeader
-            // 
-            this.notesHeader.Text = "Composed of";
-            this.notesHeader.Width = 300;
             // 
             // MainForm
             // 
