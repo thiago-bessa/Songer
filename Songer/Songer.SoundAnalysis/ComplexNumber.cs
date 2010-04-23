@@ -7,40 +7,40 @@ namespace Songer.SoundAnalysis
 {
     public struct ComplexNumber
     {
-        public double Re;
-        public double Im;
+        public double real;
+        public double imaginary;
 
-        public ComplexNumber(double re)
+        public ComplexNumber(double real)
         {
-            this.Re = re;
-            this.Im = 0;
+            this.real = real;
+            this.imaginary = 0;
         }
 
-        public ComplexNumber(double re, double im)
+        public ComplexNumber(double real, double imaginary)
         {
-            this.Re = re;
-            this.Im = im;
+            this.real = real;
+            this.imaginary = imaginary;
         }
 
         public static ComplexNumber operator *(ComplexNumber n1, ComplexNumber n2)
         {
-            return new ComplexNumber(n1.Re * n2.Re - n1.Im * n2.Im,
-                n1.Im * n2.Re + n1.Re * n2.Im);
+            return new ComplexNumber(n1.real * n2.real - n1.imaginary * n2.imaginary,
+                n1.imaginary * n2.real + n1.real * n2.imaginary);
         }
 
         public static ComplexNumber operator +(ComplexNumber n1, ComplexNumber n2)
         {
-            return new ComplexNumber(n1.Re + n2.Re, n1.Im + n2.Im);
+            return new ComplexNumber(n1.real + n2.real, n1.imaginary + n2.imaginary);
         }
 
         public static ComplexNumber operator -(ComplexNumber n1, ComplexNumber n2)
         {
-            return new ComplexNumber(n1.Re - n2.Re, n1.Im - n2.Im);
+            return new ComplexNumber(n1.real - n2.real, n1.imaginary - n2.imaginary);
         }
 
         public static ComplexNumber operator -(ComplexNumber n)
         {
-            return new ComplexNumber(-n.Re, -n.Im);
+            return new ComplexNumber(-n.real, -n.imaginary);
         }
 
         public static implicit operator ComplexNumber(double n)
@@ -50,23 +50,23 @@ namespace Songer.SoundAnalysis
 
         public ComplexNumber PoweredE()
         {
-            double e = Math.Exp(Re);
-            return new ComplexNumber(e * Math.Cos(Im), e * Math.Sin(Im));
+            double e = Math.Exp(this.real);
+            return new ComplexNumber(e * Math.Cos(this.imaginary), e * Math.Sin(this.imaginary));
         }
 
         public double Power2()
         {
-            return Re * Re - Im * Im;
+            return Math.Pow(this.real, 2) - Math.Pow(this.imaginary, 2);
         }
 
         public double AbsPower2()
         {
-            return Re * Re + Im * Im;
+            return Math.Pow(this.real, 2) + Math.Pow(this.imaginary, 2);
         }
 
         public override string ToString()
         {
-            return String.Format("{0}+i*{1}", Re, Im);
+            return String.Format("{0}+i*{1}", real, imaginary);
         }
     }
 }
