@@ -37,8 +37,8 @@ namespace Songer
                 item.SubItems.Add(chord.ToString());
             }
 
-            this.soundSource = new LineInCapture();
-            //this.soundSource = new WaveFileCapture(@"..\..\..\Sounds\G.wav");
+            //this.soundSource = new LineInCapture();
+            this.soundSource = new WaveFileCapture(@"..\..\..\Sounds\G.wav");
             
             this.soundSource.SoundDetected += (o, args) =>
             {
@@ -89,8 +89,10 @@ namespace Songer
                     double freq = (double)44100 * i / spectrogram.Length;
                     double amplitude = spectrogram[i];
 
-                    if (freq < minFreq || amplitude < 100000000000000)
+                    if (freq < minFreq || amplitude < 1000000000000000)
                         continue;
+
+                    amplitude /= 100000000000000;
 
                     MusicalNote musicalNote = notes.FindClosestNote(freq);
 
