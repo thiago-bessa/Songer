@@ -112,7 +112,7 @@ namespace Songer.SoundInput
                 this.isCapturing = false;
 
                 this.terminatedEvent.Set();
-                this.captureThread.Join();
+                this.captureThread.Abort();
 
                 this.captureBuffer.Dispose();
                 this.captureDevice.Dispose();

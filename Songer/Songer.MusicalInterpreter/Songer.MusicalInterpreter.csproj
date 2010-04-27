@@ -55,6 +55,12 @@
   <ItemGroup>
     <None Include="MusicalInterpreterClassDiagram.cd" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Songer.SoundAnalysis\Songer.SoundAnalysis.csproj">
+      <Project>{60E8F932-BD9C-44BE-B76B-D8AD7560721A}</Project>
+      <Name>Songer.SoundAnalysis</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
