@@ -15,7 +15,7 @@ namespace Songer.MusicalInterpreter
             this.MusicalNotes = new List<MusicalNote>();
         }
 
-        public static Chord FromString(string chordInformation, MusicalNoteDictionary notes)
+        internal static Chord FromString(string chordInformation, MusicalNoteDictionary notes)
         {
             Chord chord = new Chord();
 
@@ -49,6 +49,11 @@ namespace Songer.MusicalInterpreter
             }
 
             return result;
+        }
+
+        internal void Matches(Dictionary<MusicalNote, double> notesBeingPlayed)
+        {
+            throw new NotImplementedException();
         }
     }
 }
