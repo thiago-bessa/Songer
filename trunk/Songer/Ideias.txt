@@ -1,0 +1,5 @@
+Para a análise e extração de acordes, pode-se retirar as 12 (ou 24) notas com maiores amplitudes.
+A partir dessa informação, avalia os acordes que podem ser formados com aquelas notas, de
+acordo com as regras de formação de acordes.
+Deve-se tentar conseguir is acordes de um número pequeno de compassos, e então verificar quais
+deles combinam entre si, de acordo com as regras musicais.

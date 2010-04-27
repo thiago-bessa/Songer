@@ -46,6 +46,8 @@ namespace Songer.SoundInput
                 Buffer.BlockCopy(waveData, 0, soundData, 0, bufferSize);
 
                 this.OnSoundDetected(soundData);
+
+                System.Threading.Thread.Sleep(500);
             }
 
             this.waveStream.Position = 0;
