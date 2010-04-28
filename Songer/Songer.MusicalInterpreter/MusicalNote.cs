@@ -27,7 +27,7 @@ namespace Songer.MusicalInterpreter
 
             for (int i = 2; i < information.Length - 2; i++)
             {
-                musicalNote.Harmonics.Add(Convert.ToDouble(information[i]));
+                musicalNote.Harmonics.Add(Convert.ToDouble(information[i], CultureInfo.InvariantCulture));
             }
 
             return musicalNote;

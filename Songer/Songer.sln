@@ -37,12 +37,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentos", "Documentos", 
 		Ideias.txt = Ideias.txt
 		Documentos\Manual_Proj_Final_anexos.doc = Documentos\Manual_Proj_Final_anexos.doc
 		Documentos\Monografia.docx = Documentos\Monografia.docx
+		Documentos\Namespaces.png = Documentos\Namespaces.png
 		Documentos\Proposta.doc = Documentos\Proposta.doc
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Songer.MusicalInterpreter", "Songer.MusicalInterpreter\Songer.MusicalInterpreter.csproj", "{42E2AB1C-6C71-4AED-8298-F657CD58A5AC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Songer.Database", "Songer.Database\Songer.Database.csproj", "{40185A99-F854-4AA0-BFB8-CC87D245C88E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Songer.UnitTests", "Songer.UnitTests\Songer.UnitTests.csproj", "{17AF5777-77C3-4EE8-98D2-29C7C4F94244}"
 EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
@@ -74,6 +77,10 @@ Global
 		{40185A99-F854-4AA0-BFB8-CC87D245C88E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40185A99-F854-4AA0-BFB8-CC87D245C88E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40185A99-F854-4AA0-BFB8-CC87D245C88E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17AF5777-77C3-4EE8-98D2-29C7C4F94244}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17AF5777-77C3-4EE8-98D2-29C7C4F94244}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17AF5777-77C3-4EE8-98D2-29C7C4F94244}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17AF5777-77C3-4EE8-98D2-29C7C4F94244}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

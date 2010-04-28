@@ -13,8 +13,8 @@ namespace Songer.MusicalInterpreter
 
         public MusicalAnalyzer()
         {
-            this.MusicalNoteDictionary = new MusicalNoteDictionary(@"Docs\Notes.txt");
-            this.ChordDictionary = new ChordDictionary(@"Docs\Chords.txt", this.MusicalNoteDictionary);
+            this.MusicalNoteDictionary = new MusicalNoteDictionary();
+            this.ChordDictionary = new ChordDictionary(this.MusicalNoteDictionary);
         }
 
         public Dictionary<MusicalNote, double> GetNotesBeingPlayed(short[] soundData)

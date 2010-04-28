@@ -82,7 +82,7 @@
             // notesHeader
             // 
             this.notesHeader.Text = "Composed of";
-            this.notesHeader.Width = 300;
+            this.notesHeader.Width = 260;
             // 
             // amplitudeView
             // 
