@@ -11,7 +11,7 @@ namespace Songer.SoundInput
 {
     public class LineInCapture : SoundSource, IDisposable
     {
-        private const int bufferSeconds = 1;
+        private const int bufferSeconds = 3;
         private const int notifyPointsInSecond = 2;
         private bool isCapturing = false;
         private bool disposed = false;
@@ -112,7 +112,7 @@ namespace Songer.SoundInput
                 this.isCapturing = false;
 
                 this.terminatedEvent.Set();
-                this.captureThread.Abort();
+                this.captureThread.Join();
 
                 this.captureBuffer.Dispose();
                 this.captureDevice.Dispose();

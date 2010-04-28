@@ -83,14 +83,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Docs\Chords.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Docs\Notes.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Songer.Database\Songer.Database.csproj">
       <Project>{40185A99-F854-4AA0-BFB8-CC87D245C88E}</Project>
       <Name>Songer.Database</Name>

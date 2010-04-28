@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using System.Reflection;
 
 namespace Songer.MusicalInterpreter
 {
@@ -10,10 +11,15 @@ namespace Songer.MusicalInterpreter
     {
         public int[] StringNotes { get; private set; }
 
-        public MusicalNoteDictionary(string filename)
+        public MusicalNoteDictionary()
         {
             this.StringNotes = new int[6];
-            StreamReader reader = new StreamReader(filename);
+
+            Stream file = Assembly
+                .GetExecutingAssembly()
+                .GetManifestResourceStream("Songer.MusicalInterpreter.Docs.Notes.txt");
+
+            StreamReader reader = new StreamReader(file);
 
             while (!reader.EndOfStream)
             {
@@ -42,6 +48,8 @@ namespace Songer.MusicalInterpreter
                         break;
                 }
             }
+
+            reader.Close();
         }
 
         public MusicalNote FindClosestNote(double frequency)

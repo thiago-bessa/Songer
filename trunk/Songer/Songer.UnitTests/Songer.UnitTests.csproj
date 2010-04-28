@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{42E2AB1C-6C71-4AED-8298-F657CD58A5AC}</ProjectGuid>
+    <ProjectGuid>{17AF5777-77C3-4EE8-98D2-29C7C4F94244}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Songer.MusicalInterpreter</RootNamespace>
-    <AssemblyName>Songer.MusicalInterpreter</AssemblyName>
+    <RootNamespace>Songer.UnitTests</RootNamespace>
+    <AssemblyName>Songer.UnitTests</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,6 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="nunit.framework, Version=2.5.2.9222, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -45,25 +46,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Chord.cs" />
-    <Compile Include="ChordDictionary.cs" />
-    <Compile Include="MusicalAnalyzer.cs" />
-    <Compile Include="MusicalNote.cs" />
-    <Compile Include="MusicalNoteDictionary.cs" />
+    <Compile Include="MusicalAnalyzerTests.cs" />
+    <Compile Include="NotesAndChordsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="MusicalInterpreterClassDiagram.cd" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Songer.SoundAnalysis\Songer.SoundAnalysis.csproj">
-      <Project>{60E8F932-BD9C-44BE-B76B-D8AD7560721A}</Project>
-      <Name>Songer.SoundAnalysis</Name>
+    <ProjectReference Include="..\Songer.MusicalInterpreter\Songer.MusicalInterpreter.csproj">
+      <Project>{42E2AB1C-6C71-4AED-8298-F657CD58A5AC}</Project>
+      <Name>Songer.MusicalInterpreter</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Docs\Chords.txt" />
-    <EmbeddedResource Include="Docs\Notes.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

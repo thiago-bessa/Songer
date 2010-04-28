@@ -16,12 +16,9 @@ namespace Songer
     {
         private SoundSource soundSource;
         private MusicalAnalyzer musicalAnalyzer;
-        //private MusicalNoteDictionary notes;
-        //private ChordDictionary chords;
 
         private delegate void UpdateDisplayDelegate(Dictionary<MusicalNote, double> notesBeingPlayed);
         
-
         public MainForm()
         {
             InitializeComponent();
@@ -37,8 +34,8 @@ namespace Songer
                 item.SubItems.Add(chord.ToString());
             }
 
-            this.soundSource = new LineInCapture();
-            //this.soundSource = new WaveFileCapture(@"..\..\..\Sounds\G.wav");
+            //this.soundSource = new LineInCapture();
+            this.soundSource = new WaveFileCapture(@"..\..\..\Sounds\G.wav");
             
             this.soundSource.SoundDetected += (o, args) =>
             {
