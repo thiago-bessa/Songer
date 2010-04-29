@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using NUnit.Framework;
 using Songer.MusicalInterpreter;
+using Songer.SoundInput;
 
 namespace Songer.UnitTests
 {
@@ -11,11 +12,18 @@ namespace Songer.UnitTests
     public class MusicalAnalyzerTests
     {
         private MusicalAnalyzer musicalAnalyzer;
+        WaveFileCapture wave;
 
         [SetUp]
-        public void SetUpTest()
+        public void SetUp()
         {
             this.musicalAnalyzer = new MusicalAnalyzer();
+            this.wave = new WaveFileCapture(@"..\Sounds\G.wav");
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
         }
 
         [Test]

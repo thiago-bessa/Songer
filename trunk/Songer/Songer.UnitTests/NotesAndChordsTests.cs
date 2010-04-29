@@ -15,6 +15,7 @@ namespace Songer.UnitTests
         {
             MusicalNoteDictionary notes = new MusicalNoteDictionary();
 
+            Assert.That(notes.Count, Is.EqualTo(132));
             Assert.That(notes[440].Name, Is.EqualTo("A4"));
             Assert.That(notes[220].Frequency, Is.EqualTo(220));
             Assert.That(notes[987.77].Harmonics[1], Is.EqualTo(2963.3));
