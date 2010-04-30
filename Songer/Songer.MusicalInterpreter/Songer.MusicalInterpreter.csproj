@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Chord.cs" />
+    <Compile Include="EventArgsClasses.cs" />
     <Compile Include="ChordDictionary.cs" />
     <Compile Include="MusicalAnalyzer.cs" />
     <Compile Include="MusicalNote.cs" />
@@ -59,6 +60,10 @@
     <ProjectReference Include="..\Songer.SoundAnalysis\Songer.SoundAnalysis.csproj">
       <Project>{60E8F932-BD9C-44BE-B76B-D8AD7560721A}</Project>
       <Name>Songer.SoundAnalysis</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Songer.SoundInput\Songer.SoundInput.csproj">
+      <Project>{4A4CB233-46D6-454E-B7B4-91FE30139D79}</Project>
+      <Name>Songer.SoundInput</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

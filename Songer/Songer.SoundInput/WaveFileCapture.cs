@@ -13,12 +13,14 @@ namespace Songer.SoundInput
         private WaveStream waveStream;
         private Thread processingThread;
         private string filename;
+        private bool stopProcessing;
 
         public WaveFileCapture(string filename)
         {
             this.filename = filename;
             this.waveStream = new WaveStream(filename);
             this.Format = this.waveStream.Format;
+            this.stopProcessing = false;
         }
         
         public override void Start()
@@ -39,6 +41,9 @@ namespace Songer.SoundInput
             
             while (position < this.waveStream.Length)
             {
+                if (this.stopProcessing)
+                    break;
+
                 position += this.waveStream.Read(waveData, 0, bufferSize);
 
                 //Convert byte[] data to short[]
@@ -47,22 +52,21 @@ namespace Songer.SoundInput
 
                 this.OnSoundDetected(soundData);
 
-                System.Threading.Thread.Sleep(500);
+                System.Threading.Thread.Sleep(200);
             }
 
             this.waveStream.Position = 0;
-            goto getHere;
+            //goto getHere;
 
             this.waveStream.Close();
+            this.OnCaptureFinished();
         }
 
         public override void Stop()
         {
-            if (this.processingThread.IsAlive)
-            {
-                this.processingThread.Abort();
-                this.waveStream.Close();
-            }
+            this.stopProcessing = true;
+            this.processingThread.Join();
+            this.waveStream.Close();
         }
 
         #region IDisposable Members

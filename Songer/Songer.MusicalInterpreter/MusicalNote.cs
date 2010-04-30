@@ -6,7 +6,7 @@ using System.Globalization;
 
 namespace Songer.MusicalInterpreter
 {
-    public class MusicalNote
+    public class MusicalNote : IEquatable<MusicalNote>
     {
         public string Name { get; private set; }
         public double Frequency { get; private set; }
@@ -37,5 +37,14 @@ namespace Songer.MusicalInterpreter
         {
             return this.Name;
         }
+
+        #region IEquatable<MusicalNote> Members
+
+        public bool Equals(MusicalNote other)
+        {
+            return this.Name.Equals(other.Name, StringComparison.InvariantCulture);
+        }
+
+        #endregion
     }
 }

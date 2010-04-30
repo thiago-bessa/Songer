@@ -3,18 +3,44 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Songer.SoundAnalysis;
+using Songer.SoundInput;
 
 namespace Songer.MusicalInterpreter
 {
     public class MusicalAnalyzer
     {
-        public MusicalNoteDictionary MusicalNoteDictionary { get; private set; }
-        public ChordDictionary ChordDictionary { get; private set; }
+        private SoundSource soundSource;
+        private bool isStillProcessing;
+
+        public static MusicalNoteDictionary MusicalNoteDictionary { get; private set; }
+        public static ChordDictionary ChordDictionary { get; private set; }
 
         public MusicalAnalyzer()
         {
-            this.MusicalNoteDictionary = new MusicalNoteDictionary();
-            this.ChordDictionary = new ChordDictionary(this.MusicalNoteDictionary);
+            MusicalAnalyzer.MusicalNoteDictionary = new MusicalNoteDictionary();
+            MusicalAnalyzer.ChordDictionary = new ChordDictionary(MusicalAnalyzer.MusicalNoteDictionary);
+        }
+
+        public void AnalyzeAudio(SoundSource soundSource)
+        {
+            if (this.isStillProcessing)
+                throw new InvalidOperationException("AnalyzeAudio is still processing");
+
+            this.isStillProcessing = true;
+
+            this.soundSource = soundSource;
+            this.soundSource.SoundDetected += new EventHandler<SoundDetectedEventArgs>(OnSoundDetected);
+
+            this.soundSource.Start();
+        }
+
+        private void OnSoundDetected(object sender, SoundDetectedEventArgs e)
+        {
+            Dictionary<MusicalNote, double> notesBeingPlayed = this.GetNotesBeingPlayed(e.SoundData);
+            this.OnNotesDetected(notesBeingPlayed);
+            
+            List<Chord> chordBeingPlayed = this.GetChordBeingPlayed(notesBeingPlayed);
+            this.OnChordDetected(chordBeingPlayed);
         }
 
         public Dictionary<MusicalNote, double> GetNotesBeingPlayed(short[] soundData)
@@ -45,12 +71,12 @@ namespace Songer.MusicalInterpreter
                     double freq = (double)44100 * i / spectrogram.Length;
                     double amplitude = spectrogram[i];
 
-                    if (freq < minFreq)
+                    if (freq < minFreq || amplitude < 100000000000000)
                         continue;
 
                     amplitude /= 1000000000000;
 
-                    MusicalNote musicalNote = this.MusicalNoteDictionary.FindClosestNote(freq);
+                    MusicalNote musicalNote = MusicalAnalyzer.MusicalNoteDictionary.FindClosestNote(freq);
 
                     if (notesBeingPlayed.ContainsKey(musicalNote))
                     {
@@ -67,14 +93,59 @@ namespace Songer.MusicalInterpreter
             return notesBeingPlayed;
         }
 
-        public Chord GetChordBeingPlayed(Dictionary<MusicalNote, double> notesBeingPlayed, ChordDictionary chords)
+        public List<Chord> GetChordBeingPlayed(Dictionary<MusicalNote, double> notesBeingPlayed)
         {
-            foreach (Chord chord in this.ChordDictionary)
+            if (notesBeingPlayed.Count > 0)
             {
-                chord.Matches(notesBeingPlayed);
+                List<Chord> possibleChords = new List<Chord>();
+                List<MusicalNote> filteredNotes = notesBeingPlayed
+                    //.OrderBy(n => n.Value)
+                    //.Take(12)
+                    .Select(pair => pair.Key).ToList();
+
+                foreach (Chord chord in MusicalAnalyzer.ChordDictionary)
+                {
+                    if (chord.Matches(filteredNotes))
+                    {
+                        possibleChords.Add(chord);
+                    }
+                }
+
+                //possibleChords = possibleChords.OrderBy(c => c.ToString()).ToList();
+
+                return possibleChords;
             }
 
             return null;
+        }
+
+
+        public event EventHandler<NotesDetectedEventArgs> NotesDetected;
+        public event EventHandler<ChordDetectedEventArgs> ChordDetected;
+        public event EventHandler<AudioProcessingFinishedEventArgs> ProcessingFinished;
+
+        private void OnNotesDetected(Dictionary<MusicalNote, double> musicalNotes)
+        {
+            if (this.NotesDetected != null)
+            {
+                this.NotesDetected(this, new NotesDetectedEventArgs(musicalNotes));
+            }
+        }
+
+        private void OnChordDetected(List<Chord> chord)
+        {
+            if (this.ChordDetected != null)
+            {
+                this.ChordDetected(this, new ChordDetectedEventArgs(chord));
+            }
+        }
+
+        private void OnProcessingFinished(string chords)
+        {
+            if (this.ProcessingFinished != null)
+            {
+                this.ProcessingFinished(this, new AudioProcessingFinishedEventArgs(chords));
+            }
         }
     }
 }
