@@ -51,9 +51,15 @@ namespace Songer.MusicalInterpreter
             return result;
         }
 
-        internal void Matches(Dictionary<MusicalNote, double> notesBeingPlayed)
+        internal bool Matches(List<MusicalNote> notesBeingPlayed)
         {
-            throw new NotImplementedException();
+            foreach(MusicalNote note in this.MusicalNotes)
+            {
+                if (!notesBeingPlayed.Contains(note))
+                    return false;
+            }
+
+            return true;
         }
     }
 }

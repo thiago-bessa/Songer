@@ -27,8 +27,9 @@ namespace Songer
         private void MainForm_Load(object sender, EventArgs e)
         {
             this.musicalAnalyzer = new MusicalAnalyzer();
+            this.musicalAnalyzer.NotesDetected += new EventHandler<NotesDetectedEventArgs>(musicalAnalyzer_NotesDetected);
 
-            foreach (Chord chord in this.musicalAnalyzer.ChordDictionary)
+            foreach (Chord chord in MusicalAnalyzer.ChordDictionary)
             {
                 ListViewItem item = chordsView.Items.Add(chord.Name);
                 item.SubItems.Add(chord.ToString());
@@ -36,15 +37,15 @@ namespace Songer
 
             //this.soundSource = new LineInCapture();
             this.soundSource = new WaveFileCapture(@"..\..\..\Sounds\G.wav");
-            
-            this.soundSource.SoundDetected += (o, args) =>
-            {
-                this.ProcessSoundData(o, args);                
-            };
 
-            this.soundSource.Start();
+            this.musicalAnalyzer.AnalyzeAudio(this.soundSource);
 
             this.chordsView.Focus();
+        }
+
+        void musicalAnalyzer_NotesDetected(object sender, NotesDetectedEventArgs e)
+        {
+            this.Invoke(new UpdateDisplayDelegate(this.UpdateFrequecyDisplays), e.MusicalNotes);
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -58,25 +59,21 @@ namespace Songer
             this.chordsView.Focus();
         }
 
-        private void ProcessSoundData(object sender, SoundDetectedEventArgs e)
-        {
-            this.Invoke(new UpdateDisplayDelegate(this.UpdateFrequecyDisplays), this.musicalAnalyzer.GetNotesBeingPlayed(e.SoundData));
-        }
-
         private void UpdateFrequecyDisplays(Dictionary<MusicalNote, double> notesBeingPlayed)
         {
             this.SuspendLayout();
+            this.amplitudeView.Items.Clear();
 
             foreach (KeyValuePair<MusicalNote, double> musicalNote in notesBeingPlayed)
             {
-                if (amplitudeView.Items.ContainsKey(musicalNote.Key.Name))
+                if (this.amplitudeView.Items.ContainsKey(musicalNote.Key.Name))
                 {
-                    ListViewItem item = amplitudeView.Items[musicalNote.Key.Name];
+                    ListViewItem item = this.amplitudeView.Items[musicalNote.Key.Name];
                     item.SubItems[2].Text = musicalNote.Value.ToString("f3");
                 }
                 else
                 {
-                    ListViewItem item = amplitudeView.Items.Add(musicalNote.Key.Name, musicalNote.Key.Name, 0);
+                    ListViewItem item = this.amplitudeView.Items.Add(musicalNote.Key.Name, musicalNote.Key.Name, 0);
                     item.SubItems.Add(musicalNote.Key.Frequency.ToString("f3"));
                     item.SubItems.Add(musicalNote.Value.ToString("f3"));
                 }

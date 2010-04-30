@@ -15,19 +15,28 @@ namespace Songer.SoundInput
 
         private WaveFormat format = SoundSource.GenerateWaveFormat();
 
-        public event EventHandler<SoundDetectedEventArgs> SoundDetected;
-
         protected WaveFormat Format
         {
             get { return format; }
             set { format = value; }
         }
+
+        public event EventHandler<SoundDetectedEventArgs> SoundDetected;
+        public event EventHandler CaptureFinished;
         
         protected void OnSoundDetected(short[] soundData)
         {
             if (this.SoundDetected != null)
             {
                 this.SoundDetected(this, new SoundDetectedEventArgs(soundData));
+            }
+        }
+
+        protected void OnCaptureFinished()
+        {
+            if (this.CaptureFinished != null)
+            {
+                this.CaptureFinished(this, new EventArgs());
             }
         }
         
