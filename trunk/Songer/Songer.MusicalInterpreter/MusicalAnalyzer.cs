@@ -21,7 +21,17 @@ namespace Songer.MusicalInterpreter
             MusicalAnalyzer.ChordDictionary = new ChordDictionary(MusicalAnalyzer.MusicalNoteDictionary);
         }
 
-        public void AnalyzeAudio(SoundSource soundSource)
+        public void AnalyzeAudio()
+        {
+            this.AnalyzeAudio(new LineInCapture());
+        }
+
+        public void AnalyzeAudio(string filename)
+        {
+            this.AnalyzeAudio(new WaveFileCapture(filename));
+        }
+
+        internal void AnalyzeAudio(SoundSource soundSource)
         {
             if (this.isStillProcessing)
                 throw new InvalidOperationException("AnalyzeAudio is still processing");
@@ -32,6 +42,11 @@ namespace Songer.MusicalInterpreter
             this.soundSource.SoundDetected += new EventHandler<SoundDetectedEventArgs>(OnSoundDetected);
 
             this.soundSource.Start();
+        }
+
+        public void AbortAnalysis()
+        {
+            this.soundSource.Stop();
         }
 
         private void OnSoundDetected(object sender, SoundDetectedEventArgs e)

@@ -9,7 +9,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Songer.SoundInput.SoundDetectedEventArgs">
-    <Position X="2.75" Y="3.75" Width="2" />
+    <Position X="2.75" Y="4" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
       <FileName>SoundDetectedEventArgs.cs</FileName>
@@ -18,14 +18,14 @@
   <Class Name="Songer.SoundInput.SoundSource">
     <Position X="2.75" Y="0.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAACAAAAAAAAAACBEAACgAAAAAIAAAAIAAAAA=</HashCode>
+      <HashCode>AAAAAAAAACAAAAAAAAAACBEBACoAAAAAIAAAAIAAAAA=</HashCode>
       <FileName>SoundSource.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Songer.SoundInput.WaveFileCapture">
     <Position X="5.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAABAACAEAAAAQAAAAAAAAAAAAAAAIAAAAIAAAAA=</HashCode>
+      <HashCode>AAAAAARAACAEAAAAQAAAAAAAAAAAAAAAIAAAAIAAAAA=</HashCode>
       <FileName>WaveFileCapture.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
