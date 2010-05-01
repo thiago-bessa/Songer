@@ -14,7 +14,6 @@ namespace Songer
 {
     public partial class MainForm : Form
     {
-        private SoundSource soundSource;
         private MusicalAnalyzer musicalAnalyzer;
 
         private delegate void UpdateDisplayDelegate(Dictionary<MusicalNote, double> notesBeingPlayed);
@@ -35,10 +34,7 @@ namespace Songer
                 item.SubItems.Add(chord.ToString());
             }
 
-            //this.soundSource = new LineInCapture();
-            this.soundSource = new WaveFileCapture(@"..\..\..\Sounds\G.wav");
-
-            this.musicalAnalyzer.AnalyzeAudio(this.soundSource);
+            this.musicalAnalyzer.AnalyzeAudio(@"..\..\..\Sounds\G.wav");
 
             this.chordsView.Focus();
         }
@@ -50,7 +46,7 @@ namespace Songer
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            this.soundSource.Stop();
+            this.musicalAnalyzer.AbortAnalysis();
             Application.Exit();
         }
 

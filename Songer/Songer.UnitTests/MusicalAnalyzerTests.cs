@@ -53,10 +53,9 @@ namespace Songer.UnitTests
         [Test]
         public void ExtractNotesFromSoundData()
         {
-            string[] chordNotes = new string[] { "G2", "B2", "D3", "G3", "B3", "G4" };            
-            WaveFileCapture wave = new WaveFileCapture(@"..\Sounds\G.wav");
-            
-            this.musicalAnalyzer.AnalyzeAudio(wave);
+            string[] chordNotes = new string[] { "G2", "B2", "D3", "G3", "B3", "G4" };
+
+            this.musicalAnalyzer.AnalyzeAudio(@"..\Sounds\G.wav");
 
             while (this.notesBeingPlayed.Count == 0)
             {
@@ -69,26 +68,12 @@ namespace Songer.UnitTests
                     this.notesBeingPlayed.Count(m => m.Key.Name.Equals(note)),
                     Is.GreaterThan(0));
             }
-
-            wave.Stop();
-        }
-
-        private void onSoundDetected(object sender, SoundDetectedEventArgs e)
-        {
-            //this.notesBeingPlayed = this.musicalAnalyzer.GetNotesBeingPlayed(e.SoundData);
-
-            //if (this.notesBeingPlayed.Count > 0)
-            //{
-            //    this.wait = false;
-            //}
         }
 
         [Test]
         public void ExtractChordFromNotes()
         {
-            WaveFileCapture wave = new WaveFileCapture(@"..\Sounds\G.wav");
-
-            this.musicalAnalyzer.AnalyzeAudio(wave);
+            this.musicalAnalyzer.AnalyzeAudio(@"..\Sounds\G.wav");
 
             while (this.chord == null)
             {
@@ -98,15 +83,12 @@ namespace Songer.UnitTests
             Assert.That(
                 chord.Count(c => c.Name.Equals("G", StringComparison.InvariantCulture)),
                 Is.GreaterThanOrEqualTo(1));
-            wave.Stop();
         }
 
         [Test]
         public void ExtractChordCollectionFromMusic()
         {
-            WaveFileCapture wave = new WaveFileCapture(@"..\Sounds\Seq2Var.wav");
-
-            this.musicalAnalyzer.AnalyzeAudio(wave);
+            this.musicalAnalyzer.AnalyzeAudio(@"..\Sounds\Seq2Var.wav");
 
             while (this.chordSequence == string.Empty)
             {
@@ -114,7 +96,6 @@ namespace Songer.UnitTests
             }
 
             Assert.That(this.chordSequence, Is.EqualTo("G D Em C"));
-            wave.Stop();
         }
     }
 }
