@@ -36,7 +36,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentos", "Documentos", 
 		Documentos\DiagramasUML.vsd = Documentos\DiagramasUML.vsd
 		Ideias.txt = Ideias.txt
 		Documentos\Manual_Proj_Final_anexos.doc = Documentos\Manual_Proj_Final_anexos.doc
-		Documentos\Monografia.docx = Documentos\Monografia.docx
+		Documentos\Monografia.doc = Documentos\Monografia.doc
 		Documentos\Namespaces.png = Documentos\Namespaces.png
 		Documentos\Proposta.doc = Documentos\Proposta.doc
 	EndProjectSection
