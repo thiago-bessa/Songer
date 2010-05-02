@@ -16,7 +16,8 @@ namespace Songer
     {
         private MusicalAnalyzer musicalAnalyzer;
 
-        private delegate void UpdateDisplayDelegate(Dictionary<MusicalNote, double> notesBeingPlayed);
+        private delegate void UpdateNotesDelegate(Dictionary<MusicalNote, double> notesBeingPlayed);
+        private delegate void UpdateChordsDelegate(List<Chord> chords);
         
         public MainForm()
         {
@@ -27,6 +28,7 @@ namespace Songer
         {
             this.musicalAnalyzer = new MusicalAnalyzer();
             this.musicalAnalyzer.NotesDetected += new EventHandler<NotesDetectedEventArgs>(musicalAnalyzer_NotesDetected);
+            this.musicalAnalyzer.ChordDetected += new EventHandler<ChordDetectedEventArgs>(musicalAnalyzer_ChordDetected);
 
             foreach (Chord chord in MusicalAnalyzer.ChordDictionary)
             {
@@ -34,14 +36,20 @@ namespace Songer
                 item.SubItems.Add(chord.ToString());
             }
 
-            this.musicalAnalyzer.AnalyzeAudio(@"..\..\..\Sounds\G.wav");
+            //this.musicalAnalyzer.AnalyzeAudio(@"..\..\..\Sounds\G.wav");
+            this.musicalAnalyzer.AnalyzeAudio();
 
             this.chordsView.Focus();
         }
 
+        void musicalAnalyzer_ChordDetected(object sender, ChordDetectedEventArgs e)
+        {
+            this.Invoke(new UpdateChordsDelegate(this.UpdateChords), e.Chords);
+        }
+
         void musicalAnalyzer_NotesDetected(object sender, NotesDetectedEventArgs e)
         {
-            this.Invoke(new UpdateDisplayDelegate(this.UpdateFrequecyDisplays), e.MusicalNotes);
+            this.Invoke(new UpdateNotesDelegate(this.UpdateNotes), e.MusicalNotes);
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -55,7 +63,7 @@ namespace Songer
             this.chordsView.Focus();
         }
 
-        private void UpdateFrequecyDisplays(Dictionary<MusicalNote, double> notesBeingPlayed)
+        private void UpdateNotes(Dictionary<MusicalNote, double> notesBeingPlayed)
         {
             this.SuspendLayout();
             this.amplitudeView.Items.Clear();
@@ -78,5 +86,17 @@ namespace Songer
             this.ResumeLayout();
         }
 
+        private void UpdateChords(List<Chord> chords)
+        {
+            StringBuilder s = new StringBuilder();
+
+            foreach (Chord chord in chords)
+            {
+                s.Append(chord.Name);
+                s.Append(" ");
+            }
+
+            this.chordsTextBox.Text = s.ToString();
+        }
     }
 }

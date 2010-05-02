@@ -12,7 +12,7 @@ namespace Songer.SoundInput
     public class LineInCapture : SoundSource, IDisposable
     {
         private const int bufferSeconds = 3;
-        private const int notifyPointsInSecond = 2;
+        private const int notifyPointsInSecond = 3;
         private bool isCapturing = false;
         private bool disposed = false;
         private int bufferLength;

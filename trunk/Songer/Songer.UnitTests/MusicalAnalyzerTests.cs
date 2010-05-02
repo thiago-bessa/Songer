@@ -37,7 +37,7 @@ namespace Songer.UnitTests
 
         private void onChordDetected(object sender, ChordDetectedEventArgs e)
         {
-            this.chord = e.Chord;
+            this.chord = e.Chords;
         }
 
         private void onProcessingFinished(object sender, AudioProcessingFinishedEventArgs e)
