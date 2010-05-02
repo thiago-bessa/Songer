@@ -52,10 +52,16 @@ namespace Songer.MusicalInterpreter
         private void OnSoundDetected(object sender, SoundDetectedEventArgs e)
         {
             Dictionary<MusicalNote, double> notesBeingPlayed = this.GetNotesBeingPlayed(e.SoundData);
-            this.OnNotesDetected(notesBeingPlayed);
+            if (notesBeingPlayed.Count > 0)
+            {
+                this.OnNotesDetected(notesBeingPlayed);
+            }
             
-            List<Chord> chordBeingPlayed = this.GetChordBeingPlayed(notesBeingPlayed);
-            this.OnChordDetected(chordBeingPlayed);
+            List<Chord> chordsBeingPlayed = this.GetChordsBeingPlayed(notesBeingPlayed);
+            if (chordsBeingPlayed != null)
+            {
+                this.OnChordDetected(chordsBeingPlayed);
+            }
         }
 
         public Dictionary<MusicalNote, double> GetNotesBeingPlayed(short[] soundData)
@@ -108,7 +114,7 @@ namespace Songer.MusicalInterpreter
             return notesBeingPlayed;
         }
 
-        public List<Chord> GetChordBeingPlayed(Dictionary<MusicalNote, double> notesBeingPlayed)
+        public List<Chord> GetChordsBeingPlayed(Dictionary<MusicalNote, double> notesBeingPlayed)
         {
             if (notesBeingPlayed.Count > 0)
             {
