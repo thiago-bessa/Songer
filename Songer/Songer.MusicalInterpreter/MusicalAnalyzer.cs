@@ -92,7 +92,7 @@ namespace Songer.MusicalInterpreter
                     double freq = (double)44100 * i / spectrogram.Length;
                     double amplitude = spectrogram[i];
 
-                    if (freq < minFreq || amplitude < 100000000000000)
+                    if (freq < minFreq || amplitude < 80000000000000)
                         continue;
 
                     amplitude /= 1000000000000;
