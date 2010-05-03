@@ -32,9 +32,6 @@ namespace Songer.SoundInput
 
         protected override void CaptureLoop()
         {
-
-        //getHere:
-
             int bufferSize = this.Format.AverageBytesPerSecond / 3;
             byte[] waveData = new byte[bufferSize];
             int position = 0;
@@ -54,9 +51,6 @@ namespace Songer.SoundInput
 
                 System.Threading.Thread.Sleep(50);
             }
-
-            //this.waveStream.Position = 0;
-            //goto getHere;
 
             this.waveStream.Close();
             this.OnCaptureFinished();

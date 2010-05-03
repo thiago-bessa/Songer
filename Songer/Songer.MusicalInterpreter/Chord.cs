@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Songer.MusicalInterpreter
 {
-    public class Chord
+    public class Chord : IEquatable<Chord>
     {
         public string Name { get; private set; }
         public List<MusicalNote> MusicalNotes { get; private set; }
@@ -15,7 +15,7 @@ namespace Songer.MusicalInterpreter
             this.MusicalNotes = new List<MusicalNote>();
         }
 
-        internal static Chord FromString(string chordInformation, MusicalNoteDictionary notes)
+        internal static Chord FromString(string chordInformation)
         {
             Chord chord = new Chord();
 
@@ -33,7 +33,8 @@ namespace Songer.MusicalInterpreter
                     continue;
 
                 //Convert the finger position on guitar string to musical note
-                chord.MusicalNotes.Add(notes.ElementAt(notes.StringNotes[i] + Convert.ToInt32(note)).Value);
+                chord.MusicalNotes.Add(MusicalAnalyzer.MusicalNoteDictionary.ElementAt(
+                    MusicalAnalyzer.MusicalNoteDictionary.StringNotes[i] + Convert.ToInt32(note)).Value);
             }
 
             return chord;
@@ -61,5 +62,14 @@ namespace Songer.MusicalInterpreter
 
             return true;
         }
+
+        #region IEquatable<Chord> Members
+
+        public bool Equals(Chord other)
+        {
+            return this.Name.Equals(other.Name, StringComparison.InvariantCultureIgnoreCase);
+        }
+
+        #endregion
     }
 }

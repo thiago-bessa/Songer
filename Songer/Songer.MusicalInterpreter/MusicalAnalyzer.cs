@@ -11,6 +11,7 @@ namespace Songer.MusicalInterpreter
     {
         private SoundSource soundSource;
         private bool isStillProcessing;
+        private List<Chord> chordSequence;
 
         public static MusicalNoteDictionary MusicalNoteDictionary { get; private set; }
         public static ChordDictionary ChordDictionary { get; private set; }
@@ -18,7 +19,9 @@ namespace Songer.MusicalInterpreter
         public MusicalAnalyzer()
         {
             MusicalAnalyzer.MusicalNoteDictionary = new MusicalNoteDictionary();
-            MusicalAnalyzer.ChordDictionary = new ChordDictionary(MusicalAnalyzer.MusicalNoteDictionary);
+            MusicalAnalyzer.ChordDictionary = new ChordDictionary();
+
+            this.chordSequence = new List<Chord>();
         }
 
         public void AnalyzeAudio()
@@ -31,15 +34,19 @@ namespace Songer.MusicalInterpreter
             this.AnalyzeAudio(new WaveFileCapture(filename));
         }
 
-        internal void AnalyzeAudio(SoundSource soundSource)
+        private void AnalyzeAudio(SoundSource soundSource)
         {
             if (this.isStillProcessing)
+            {
                 throw new InvalidOperationException("AnalyzeAudio is still processing");
-
+            }
+            
             this.isStillProcessing = true;
+            this.chordSequence.Clear();
 
             this.soundSource = soundSource;
             this.soundSource.SoundDetected += new EventHandler<SoundDetectedEventArgs>(OnSoundDetected);
+            this.soundSource.CaptureFinished += new EventHandler(OnCaptureFinished);
 
             this.soundSource.Start();
         }
@@ -47,6 +54,30 @@ namespace Songer.MusicalInterpreter
         public void AbortAnalysis()
         {
             this.soundSource.Stop();
+            this.OnProcessingFinished();
+        }
+
+        private string ProcessCapturedChordsSequence()
+        {
+            List<Chord> finalChordSequence = new List<Chord>();
+            StringBuilder s = new StringBuilder();
+
+            //Eliminate repeating continuous chords
+            foreach (Chord chord in this.chordSequence)
+            {
+                if (!finalChordSequence.Contains(chord))
+                {
+                    finalChordSequence.Add(chord);
+                }
+            }
+
+            foreach (Chord chord in finalChordSequence)
+            {
+                s.AppendFormat("{0} ", chord.Name);
+            }
+
+            //Removes final space before returning
+            return s.Remove(s.Length - 1, 1).ToString(); 
         }
 
         private void OnSoundDetected(object sender, SoundDetectedEventArgs e)
@@ -57,11 +88,17 @@ namespace Songer.MusicalInterpreter
                 this.OnNotesDetected(notesBeingPlayed);
             }
             
-            List<Chord> chordsBeingPlayed = this.GetChordsBeingPlayed(notesBeingPlayed);
-            if (chordsBeingPlayed != null)
+            Chord chordBeingPlayed = this.GetChordsBeingPlayed(notesBeingPlayed);
+            if (chordBeingPlayed != null)
             {
-                this.OnChordDetected(chordsBeingPlayed);
+                this.OnChordDetected(chordBeingPlayed);
+                this.chordSequence.Add(chordBeingPlayed);
             }
+        }
+
+        private void OnCaptureFinished(object sender, EventArgs e)
+        {
+            this.OnProcessingFinished();
         }
 
         public Dictionary<MusicalNote, double> GetNotesBeingPlayed(short[] soundData)
@@ -114,33 +151,41 @@ namespace Songer.MusicalInterpreter
             return notesBeingPlayed;
         }
 
-        public List<Chord> GetChordsBeingPlayed(Dictionary<MusicalNote, double> notesBeingPlayed)
+        public Chord GetChordsBeingPlayed(Dictionary<MusicalNote, double> notesBeingPlayed)
         {
+            List<Chord> possibleChords = new List<Chord>();
+
             if (notesBeingPlayed.Count > 0)
             {
-                List<Chord> possibleChords = new List<Chord>();
                 List<MusicalNote> filteredNotes = notesBeingPlayed
-                    //.OrderBy(n => n.Value)
-                    //.Take(12)
+                    .OrderBy(n => n.Value)
+                    .Take(12)
                     .Select(pair => pair.Key).ToList();
 
                 foreach (Chord chord in MusicalAnalyzer.ChordDictionary)
                 {
-                    if (chord.Matches(filteredNotes))
+                    if (chord.Matches(filteredNotes) && !possibleChords.Contains(chord))
                     {
                         possibleChords.Add(chord);
                     }
                 }
-
-                //possibleChords = possibleChords.OrderBy(c => c.ToString()).ToList();
-
-                return possibleChords;
             }
 
-            return null;
+            switch (possibleChords.Count)
+            {
+                case 0: //No chord found
+                    return null;
+             
+                case 1: //Only one chord found
+                    return possibleChords[0];
+
+                default: //More than one chord found, try to get one with higher probability
+
+                    return Chord.FromString("error me");
+                    
+            }
         }
-
-
+        
         public event EventHandler<NotesDetectedEventArgs> NotesDetected;
         public event EventHandler<ChordDetectedEventArgs> ChordDetected;
         public event EventHandler<AudioProcessingFinishedEventArgs> ProcessingFinished;
@@ -153,7 +198,7 @@ namespace Songer.MusicalInterpreter
             }
         }
 
-        private void OnChordDetected(List<Chord> chord)
+        private void OnChordDetected(Chord chord)
         {
             if (this.ChordDetected != null)
             {
@@ -161,11 +206,11 @@ namespace Songer.MusicalInterpreter
             }
         }
 
-        private void OnProcessingFinished(string chords)
+        private void OnProcessingFinished()
         {
             if (this.ProcessingFinished != null)
             {
-                this.ProcessingFinished(this, new AudioProcessingFinishedEventArgs(chords));
+                this.ProcessingFinished(this, new AudioProcessingFinishedEventArgs(this.ProcessCapturedChordsSequence()));
             }
         }
     }

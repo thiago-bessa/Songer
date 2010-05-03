@@ -17,11 +17,11 @@ namespace Songer.MusicalInterpreter
 
     public class ChordDetectedEventArgs : EventArgs
     {
-        public List<Chord> Chords { get; private set; }
+        public Chord Chord { get; private set; }
 
-        public ChordDetectedEventArgs(List<Chord> chord)
+        public ChordDetectedEventArgs(Chord chord)
         {
-            this.Chords = chord;
+            this.Chord = chord;
         }
     }
 

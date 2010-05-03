@@ -26,14 +26,14 @@ namespace Songer.UnitTests
         public void LoadChordDictionary()
         {
             MusicalNoteDictionary notes = new MusicalNoteDictionary();
-            ChordDictionary chords = new ChordDictionary(notes);
+            ChordDictionary chords = new ChordDictionary();
             
-            Chord chordA = chords[0];
-            Assert.That(chordA.Name, Is.EqualTo("A"));
-            string[] notesChordA = new string[] { "E2", "A2", "E3", "A3", "C4#", "E4" };
-            for (int i = 0; i < chordA.MusicalNotes.Count; i++)
+            Chord chordC = chords[0];
+            Assert.That(chordC.Name, Is.EqualTo("C"));
+            string[] notesChordC = new string[] { "E2", "C3", "G3", "C4", "E4", "G4" };
+            for (int i = 0; i < chordC.MusicalNotes.Count; i++)
             {
-                Assert.That(chordA.MusicalNotes[i].Name, Is.EqualTo(notesChordA[i]));
+                Assert.That(chordC.MusicalNotes[i].Name, Is.EqualTo(notesChordC[i]));
             }
 
             Chord chordEm7 = chords.Find(chord => chord.Name.Equals("Em7"));
