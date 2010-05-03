@@ -9,7 +9,7 @@ namespace Songer.MusicalInterpreter
 {
     public class ChordDictionary : List<Chord>
     {
-        public ChordDictionary(MusicalNoteDictionary notes)
+        internal ChordDictionary()
         {
             Stream file = Assembly
                 .GetExecutingAssembly()
@@ -19,7 +19,7 @@ namespace Songer.MusicalInterpreter
 
             while (!reader.EndOfStream)
             {
-                Chord chord = Chord.FromString(reader.ReadLine(), notes);
+                Chord chord = Chord.FromString(reader.ReadLine());
                 this.Add(chord);
             }
 

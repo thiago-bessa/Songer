@@ -14,7 +14,7 @@ namespace Songer.UnitTests
     {
         private MusicalAnalyzer musicalAnalyzer;
         private Dictionary<MusicalNote, double> notesBeingPlayed;
-        private List<Chord> chord;
+        private Chord chord;
         private string chordSequence;
 
         [SetUp]
@@ -37,17 +37,12 @@ namespace Songer.UnitTests
 
         private void onChordDetected(object sender, ChordDetectedEventArgs e)
         {
-            this.chord = e.Chords;
+            this.chord = e.Chord;
         }
 
         private void onProcessingFinished(object sender, AudioProcessingFinishedEventArgs e)
         {
             this.chordSequence = e.Chords;
-        }
-
-        [TearDown]
-        public void TearDownTestEnvironment()
-        {
         }
 
         [Test]
@@ -58,7 +53,7 @@ namespace Songer.UnitTests
             this.musicalAnalyzer.AnalyzeAudio(@"..\Sounds\G.wav");
 
             while (this.notesBeingPlayed.Count == 0)
-            {
+            { 
                 Thread.Sleep(100);
             }
 
@@ -79,16 +74,14 @@ namespace Songer.UnitTests
             {
                 Thread.Sleep(100);
             }
-            
-            Assert.That(
-                chord.Count(c => c.Name.Equals("G", StringComparison.InvariantCulture)),
-                Is.GreaterThanOrEqualTo(1));
+
+            Assert.That(chord.Name, Is.EqualTo("G"));
         }
 
         [Test]
         public void ExtractChordCollectionFromMusic()
         {
-            this.musicalAnalyzer.AnalyzeAudio(@"..\Sounds\Seq2Var.wav");
+            this.musicalAnalyzer.AnalyzeAudio(@"..\Sounds\Seq1.wav");
 
             while (this.chordSequence == string.Empty)
             {

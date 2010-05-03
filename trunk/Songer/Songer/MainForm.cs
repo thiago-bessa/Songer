@@ -17,7 +17,7 @@ namespace Songer
         private MusicalAnalyzer musicalAnalyzer;
 
         private delegate void UpdateNotesDelegate(Dictionary<MusicalNote, double> notesBeingPlayed);
-        private delegate void UpdateChordsDelegate(List<Chord> chords);
+        private delegate void UpdateChordsDelegate(Chord chord);
         
         public MainForm()
         {
@@ -44,7 +44,7 @@ namespace Songer
 
         void musicalAnalyzer_ChordDetected(object sender, ChordDetectedEventArgs e)
         {
-            this.Invoke(new UpdateChordsDelegate(this.UpdateChords), e.Chords);
+            this.Invoke(new UpdateChordsDelegate(this.UpdateChords), e.Chord);
         }
 
         void musicalAnalyzer_NotesDetected(object sender, NotesDetectedEventArgs e)
@@ -86,17 +86,17 @@ namespace Songer
             this.ResumeLayout();
         }
 
-        private void UpdateChords(List<Chord> chords)
+        private void UpdateChords(Chord chord)
         {
-            StringBuilder s = new StringBuilder();
+            //StringBuilder s = new StringBuilder();
 
-            foreach (Chord chord in chords)
-            {
-                s.Append(chord.Name);
-                s.Append(" ");
-            }
+            //foreach (Chord chord in chords)
+            //{
+            //    s.Append(chord.Name);
+            //    s.Append(" ");
+            //}
 
-            this.chordsTextBox.Text = s.ToString();
+            this.chordsTextBox.Text = chord.Name; //s.ToString();
         }
     }
 }

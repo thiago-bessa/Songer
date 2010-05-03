@@ -42,7 +42,7 @@ namespace Songer.MusicalInterpreter
 
         public bool Equals(MusicalNote other)
         {
-            return this.Name.Equals(other.Name, StringComparison.InvariantCulture);
+            return this.Name.Equals(other.Name, StringComparison.InvariantCultureIgnoreCase);
         }
 
         #endregion

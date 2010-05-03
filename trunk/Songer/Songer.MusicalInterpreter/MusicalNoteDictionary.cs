@@ -11,7 +11,7 @@ namespace Songer.MusicalInterpreter
     {
         public int[] StringNotes { get; private set; }
 
-        public MusicalNoteDictionary()
+        internal MusicalNoteDictionary()
         {
             this.StringNotes = new int[6];
 
