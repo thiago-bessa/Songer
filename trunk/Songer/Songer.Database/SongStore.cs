@@ -27,6 +27,11 @@ namespace Songer.Database
             this.database.Commit();
         }
 
+        public void Close()
+        {
+            this.database.Close();
+        }
+
         public IList<Song> Search(string chordSequence)
         {
             return this.database.Query<Song>(s => s.Matches(chordSequence));

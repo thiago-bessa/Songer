@@ -49,7 +49,7 @@ namespace Songer.SoundInput
 
                 this.OnSoundDetected(soundData);
 
-                System.Threading.Thread.Sleep(50);
+                System.Threading.Thread.Sleep(1);
             }
 
             this.waveStream.Close();
