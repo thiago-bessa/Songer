@@ -47,6 +47,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Songer.Database", "Songer.D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Songer.UnitTests", "Songer.UnitTests\Songer.UnitTests.csproj", "{17AF5777-77C3-4EE8-98D2-29C7C4F94244}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Songer.Presentation", "Songer.Presentation\Songer.Presentation.csproj", "{9A2183EF-A6E1-4094-B998-F59F50EBD56C}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -81,6 +83,10 @@ Global
 		{17AF5777-77C3-4EE8-98D2-29C7C4F94244}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17AF5777-77C3-4EE8-98D2-29C7C4F94244}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{17AF5777-77C3-4EE8-98D2-29C7C4F94244}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A2183EF-A6E1-4094-B998-F59F50EBD56C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A2183EF-A6E1-4094-B998-F59F50EBD56C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A2183EF-A6E1-4094-B998-F59F50EBD56C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A2183EF-A6E1-4094-B998-F59F50EBD56C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
