@@ -208,6 +208,8 @@ namespace Songer.MusicalInterpreter
 
         private void OnProcessingFinished()
         {
+            this.isStillProcessing = false;
+
             if (this.ProcessingFinished != null)
             {
                 this.ProcessingFinished(this, new AudioProcessingFinishedEventArgs(this.ProcessCapturedChordsSequence()));
