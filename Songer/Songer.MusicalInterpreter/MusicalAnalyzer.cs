@@ -54,6 +54,8 @@ namespace Songer.MusicalInterpreter
         public void AbortAnalysis()
         {
             this.soundSource.Stop();
+            this.soundSource.SoundDetected -= OnSoundDetected;
+            this.soundSource.CaptureFinished -= OnCaptureFinished;
             this.OnProcessingFinished();
         }
 
@@ -128,6 +130,7 @@ namespace Songer.MusicalInterpreter
                 {
                     double freq = (double)44100 * i / spectrogram.Length;
                     double amplitude = spectrogram[i];
+
 
                     if (freq < minFreq || amplitude < 80000000000000)
                         continue;
