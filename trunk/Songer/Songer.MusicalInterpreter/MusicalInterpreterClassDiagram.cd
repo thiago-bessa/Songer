@@ -18,7 +18,7 @@
   <Class Name="Songer.MusicalInterpreter.MusicalAnalyzer">
     <Position X="4.75" Y="0.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AgAAAAAiAAEIAEAAgAAAAAEAAGIAAgAEQAAAoAAIAAA=</HashCode>
+      <HashCode>AgAAABACAAEKCEEAgAAAAAAgAGIAAgAEQAAAoAAIAAA=</HashCode>
       <FileName>MusicalAnalyzer.cs</FileName>
     </TypeIdentifier>
   </Class>
