@@ -52,7 +52,7 @@ namespace Songer.MusicalInterpreter
             return result;
         }
 
-        internal bool Matches(List<MusicalNote> notesBeingPlayed)
+        internal bool Matches(IEnumerable<MusicalNote> notesBeingPlayed)
         {
             foreach(MusicalNote note in this.MusicalNotes)
             {

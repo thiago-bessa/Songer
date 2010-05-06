@@ -16,6 +16,9 @@ namespace Songer.MusicalInterpreter
         public static MusicalNoteDictionary MusicalNoteDictionary { get; private set; }
         public static ChordDictionary ChordDictionary { get; private set; }
 
+        private const double minFreq = 70;
+        private const double maxFreq = 1300;
+
         public MusicalAnalyzer()
         {
             MusicalAnalyzer.MusicalNoteDictionary = new MusicalNoteDictionary();
@@ -67,7 +70,7 @@ namespace Songer.MusicalInterpreter
             //Eliminate repeating continuous chords
             foreach (Chord chord in this.chordSequence)
             {
-                if (!finalChordSequence.Contains(chord))
+                if (finalChordSequence.Last() != chord)
                 {
                     finalChordSequence.Add(chord);
                 }
@@ -90,7 +93,7 @@ namespace Songer.MusicalInterpreter
                 this.OnNotesDetected(notesBeingPlayed);
             }
             
-            Chord chordBeingPlayed = this.GetChordsBeingPlayed(notesBeingPlayed);
+            Chord chordBeingPlayed = this.GetChordBeingPlayed(notesBeingPlayed);
             if (chordBeingPlayed != null)
             {
                 this.OnChordDetected(chordBeingPlayed);
@@ -103,14 +106,16 @@ namespace Songer.MusicalInterpreter
             this.OnProcessingFinished();
         }
 
-        public Dictionary<MusicalNote, double> GetNotesBeingPlayed(short[] soundData)
+        private Dictionary<MusicalNote, double> GetNotesBeingPlayed(short[] soundData)
         {
             Dictionary<MusicalNote, double> notesBeingPlayed = new Dictionary<MusicalNote, double>();
 
-            double minFreq = 70; //Value based on possible guitar notes
-            double maxFreq = 1300; //Value based on possible guitar notes
+            // Chama o módulo SoundAnalysis para retornar 
+            // o espectrograma dos dados de som recebidos
             double[] spectrogram = CooleyTukeyFFT.CalculateSpectrogram(soundData);
-
+            
+            // Descobre qual a frequência que possui a amplitude 
+            // mais alta de som
             int index = 0;
             double max = spectrogram[0];
             int usefullMaxSpectr = Math.Min(spectrogram.Length, (int)(maxFreq * spectrogram.Length / 44100) + 1);
@@ -124,13 +129,17 @@ namespace Songer.MusicalInterpreter
                 }
             }
 
+            // Processa apenas se a frequência encontrada for maior 
+            // que a frequência mínima que um violão/guitarra pode emitir
             if (((double)44100 * index / spectrogram.Length) > minFreq)
             {
+                // Percorre todo o espectrograma e guarda na lista apenas
+                // as notas com frequência e amplitude aceitáveis
                 for (int i = 1; i < usefullMaxSpectr; i++)
                 {
+                    // Encontra a frequência da nota
                     double freq = (double)44100 * i / spectrogram.Length;
                     double amplitude = spectrogram[i];
-
 
                     if (freq < minFreq || amplitude < 80000000000000)
                         continue;
@@ -139,6 +148,8 @@ namespace Songer.MusicalInterpreter
 
                     MusicalNote musicalNote = MusicalAnalyzer.MusicalNoteDictionary.FindClosestNote(freq);
 
+                    // Como uma mesma nota pode aparecer mais de uma vez,
+                    // salva a maior amplitude em que ela aparecer
                     if (notesBeingPlayed.ContainsKey(musicalNote))
                     {
                         if (notesBeingPlayed[musicalNote] < amplitude)
@@ -154,17 +165,22 @@ namespace Songer.MusicalInterpreter
             return notesBeingPlayed;
         }
 
-        public Chord GetChordsBeingPlayed(Dictionary<MusicalNote, double> notesBeingPlayed)
+        private Chord GetChordBeingPlayed(Dictionary<MusicalNote, double> notesBeingPlayed)
         {
             List<Chord> possibleChords = new List<Chord>();
 
-            if (notesBeingPlayed.Count > 0)
+            // Certifica-se que pelo menos 3 notas foram tocadas,
+            // já que um acorde é formado de pelo menos 3 notas (tríade)
+            if (notesBeingPlayed.Count > 2)
             {
-                List<MusicalNote> filteredNotes = notesBeingPlayed
-                    .OrderBy(n => n.Value)
-                    .Take(12)
-                    .Select(pair => pair.Key).ToList();
+                // Filtra apenas as 12 notas com maior amplitude
+                // utilizando LINQ
+                IEnumerable<MusicalNote> filteredNotes = (from note in notesBeingPlayed                                                        
+                                                         orderby note.Value                                                         
+                                                         select note.Key).Take(12);
 
+                // Verifica quais são os possíveis acordes, de acordo
+                // com as notas musicais
                 foreach (Chord chord in MusicalAnalyzer.ChordDictionary)
                 {
                     if (chord.Matches(filteredNotes) && !possibleChords.Contains(chord))
@@ -177,16 +193,17 @@ namespace Songer.MusicalInterpreter
             switch (possibleChords.Count)
             {
                 case 0: //No chord found
-                    return null;
-             
+                    return null;             
                 case 1: //Only one chord found
                     return possibleChords[0];
-
                 default: //More than one chord found, try to get one with higher probability
-
-                    return Chord.FromString("error me");
-                    
+                    return this.FindBestChord(notesBeingPlayed, possibleChords);                   
             }
+        }
+
+        private Chord FindBestChord(Dictionary<MusicalNote, double> notesBeingPlayed, List<Chord> chords)
+        {
+            return chords[0]; //TODO!!!!!
         }
         
         public event EventHandler<NotesDetectedEventArgs> NotesDetected;
