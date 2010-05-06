@@ -3,9 +3,10 @@
   <Class Name="Songer.MusicalInterpreter.Chord">
     <Position X="2.75" Y="0.5" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>ABAAAAAAAAAAAAAEEAAAAAQAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <HashCode>ABAAAAAAAAAAAAAEkAAAAAQAAAAAAAAAAAAAAACAAAA=</HashCode>
       <FileName>Chord.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="Songer.MusicalInterpreter.ChordDictionary">
     <Position X="2.75" Y="3" Width="1.75" />
@@ -15,9 +16,9 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Songer.MusicalInterpreter.MusicalAnalyzer">
-    <Position X="4.75" Y="0.5" Width="1.75" />
+    <Position X="4.75" Y="0.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAACAAEIAEEAgAAAAAAAAGAAAAAEQAAAoAAIAAA=</HashCode>
+      <HashCode>AgAAAAAiAAEIAEAAgAAAAAEAAGIAAgAEQAAAoAAIAAA=</HashCode>
       <FileName>MusicalAnalyzer.cs</FileName>
     </TypeIdentifier>
   </Class>
