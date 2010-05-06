@@ -62,7 +62,7 @@ namespace Songer.MusicalInterpreter
             this.OnProcessingFinished();
         }
 
-        private string ProcessCapturedChordsSequence()
+        private string ProcessChordsSequence()
         {
             List<Chord> finalChordSequence = new List<Chord>();
             StringBuilder s = new StringBuilder();
@@ -232,7 +232,7 @@ namespace Songer.MusicalInterpreter
 
             if (this.ProcessingFinished != null)
             {
-                this.ProcessingFinished(this, new AudioProcessingFinishedEventArgs(this.ProcessCapturedChordsSequence()));
+                this.ProcessingFinished(this, new AudioProcessingFinishedEventArgs(this.ProcessChordsSequence()));
             }
         }
     }
