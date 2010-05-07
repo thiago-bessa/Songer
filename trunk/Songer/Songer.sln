@@ -36,7 +36,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentos", "Documentos", 
 		Documentos\DiagramasUML.vsd = Documentos\DiagramasUML.vsd
 		Ideias.txt = Ideias.txt
 		Documentos\Manual_Proj_Final_anexos.doc = Documentos\Manual_Proj_Final_anexos.doc
-		Documentos\Monografia.docx = Documentos\Monografia.docx
 		Documentos\Namespaces.png = Documentos\Namespaces.png
 		Documentos\Proposta.doc = Documentos\Proposta.doc
 	EndProjectSection
@@ -48,6 +47,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Songer.UnitTests", "Songer.UnitTests\Songer.UnitTests.csproj", "{17AF5777-77C3-4EE8-98D2-29C7C4F94244}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Songer.Presentation", "Songer.Presentation\Songer.Presentation.csproj", "{9A2183EF-A6E1-4094-B998-F59F50EBD56C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{26E523F1-0167-4CFD-94FC-E36E524CE0F2}"
+	ProjectSection(SolutionItems) = preProject
+		Documentos\Monografia.docx = Documentos\Monografia.docx
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
