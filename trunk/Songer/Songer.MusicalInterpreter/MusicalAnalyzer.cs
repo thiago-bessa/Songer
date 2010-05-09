@@ -70,7 +70,11 @@ namespace Songer.MusicalInterpreter
             //Eliminate repeating continuous chords
             foreach (Chord chord in this.chordSequence)
             {
-                if (finalChordSequence.Last() != chord)
+                if (finalChordSequence.Count == 0)
+                {
+                    finalChordSequence.Add(chord);
+                }
+                else if (!chord.Equals(finalChordSequence.Last()))
                 {
                     finalChordSequence.Add(chord);
                 }
@@ -203,8 +207,33 @@ namespace Songer.MusicalInterpreter
 
         private Chord FindBestChord(Dictionary<MusicalNote, double> notesBeingPlayed, List<Chord> chords)
         {
-            return chords[0]; //TODO!!!!!
+            Chord bestChord = null;
+            double bestChordAmplitude = 0;
+            double chordAmplitude;
+
+            // Percorre a lista de acordes para saber qual deles
+            // é composto pelas notas de maiores amplitudes
+            foreach (Chord chord in chords)
+            {
+                chordAmplitude = 0;
+
+                foreach (MusicalNote note in chord.MusicalNotes)
+                {
+                    // Soma a amplitude de cada nota
+                    chordAmplitude += notesBeingPlayed[note];    
+                }
+
+                // Se for a maior soma de amplitude encontrada, armazena o acorde
+                if (chordAmplitude > bestChordAmplitude)
+                {
+                    bestChordAmplitude = chordAmplitude;
+                    bestChord = chord;
+                }
+            }
+            
+            return bestChord; 
         }
+
         
         public event EventHandler<NotesDetectedEventArgs> NotesDetected;
         public event EventHandler<ChordDetectedEventArgs> ChordDetected;
