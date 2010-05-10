@@ -85,6 +85,11 @@ namespace Songer.MusicalInterpreter
                 s.AppendFormat("{0} ", chord.Name);
             }
 
+            if (s.Length == 0)
+            {
+                s.Append(" ");
+            }
+
             //Removes final space before returning
             return s.Remove(s.Length - 1, 1).ToString(); 
         }
