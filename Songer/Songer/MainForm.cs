@@ -84,6 +84,7 @@ namespace Songer
             }
 
             this.ResumeLayout();
+            this.chordsTextBox.Text = string.Empty;
         }
 
         private void UpdateChords(Chord chord)
